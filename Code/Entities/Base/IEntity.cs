@@ -1,4 +1,6 @@
-﻿namespace Sandbox;
+﻿using Sandbox;
+
+namespace Legacy;
 
 /// <summary>
 /// A generic entity.

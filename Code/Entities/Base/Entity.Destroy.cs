@@ -1,4 +1,6 @@
-﻿namespace Sandbox;
+﻿using Sandbox;
+
+namespace Legacy;
 
 public partial class Entity
 {

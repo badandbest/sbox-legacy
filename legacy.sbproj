@@ -1,7 +1,27 @@
 {
-  "Title": "legacy",
+  "Title": "Entity System",
   "Type": "library",
-  "Org": "local",
+  "Org": "badandbest",
   "Ident": "legacy",
-  "Schema": 1
+  "Schema": 1,
+  "IncludeSourceFiles": false,
+  "Resources": null,
+  "PackageReferences": [],
+  "EditorReferences": null,
+  "IsStandaloneOnly": false,
+  "Metadata": {
+    "CsProjName": "Entity System",
+    "Compiler": {
+      "RootNamespace": "Legacy",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;",
+      "WarningsAsErrors": "",
+      "TreatWarningsAsErrors": false,
+      "Nullables": false,
+      "ReleaseMode": "Debug",
+      "AssemblyReferences": [],
+      "IgnoreFolders": [],
+      "DistinctAssemblyReferences": []
+    }
+  }
 }

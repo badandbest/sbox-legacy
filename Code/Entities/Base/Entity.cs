@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Sandbox;
 
-namespace Sandbox;
+namespace Legacy;
 
 /// <summary>
 /// A base entity all other entities derive from.
@@ -24,9 +25,7 @@ public partial class Entity : IEntity
 	/// </summary>
 	public Entity()
 	{
-		var scene = Game.ActiveScene;
-
-		GameObject = scene.CreateObject();
+		GameObject = new GameObject( true, "Entity" );
 
 		All.Add( this );
 	}

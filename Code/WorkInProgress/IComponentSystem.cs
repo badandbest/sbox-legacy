@@ -1,4 +1,4 @@
-﻿namespace Sandbox;
+﻿namespace Legacy;
 
 public interface IComponentSystem
 {
