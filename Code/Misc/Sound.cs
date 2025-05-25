@@ -80,7 +80,7 @@ public readonly struct Sound( SoundHandle handle )
 	public static Sound FromScreen( string name, float x = 0.5f, float y = 0.5f )
 	{
 		var sound = ResourceLibrary.Get<SoundEvent>( name );
-		var camera = Game.ActiveScene.Camera.GameObject;
+		var camera = Sandbox.Game.ActiveScene.Camera.GameObject;
 
 		return new Sound( camera.PlaySound( sound, new(x, y) ) );
 	}

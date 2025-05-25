@@ -23,7 +23,7 @@ public class LegacyMapInstance : MapInstance
 
 	protected override void OnCreateObject( GameObject go, MapLoader.ObjectEntry kv )
 	{
-		if ( !Game.InGame ) return;
+		if ( !Sandbox.Game.InGame ) return;
 		if ( !HammerEntities.TryGetValue( kv.TypeName, out var type ) ) return;
 
 		// Game object is already created by the entity.
