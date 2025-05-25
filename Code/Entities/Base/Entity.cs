@@ -74,18 +74,12 @@ public partial class Entity : IEntity
 	}
 
 	#region Unimplemented
-	
-	public IClient Client { get; }
-	public int Id { get; }
-	public bool IsDormant { get; }
-	public bool IsOwnedByLocalClient { get; }
-	public bool IsFromMap { get; }
+
 	public BBox WorldSpaceBounds { get; }
 	public string TagList { get; set; }
-	public bool IsClientOnly { get; }
-	public int NetworkIdent { get; }
+
 	public Vector3 Velocity { get; set; }
-	public bool IsAuthority { get; }
+
 	public IComponentSystem Components { get; }
 
 	#endregion
