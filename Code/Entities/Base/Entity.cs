@@ -25,7 +25,8 @@ public partial class Entity : IEntity
 	/// </summary>
 	public Entity()
 	{
-		GameObject = new GameObject( true, "Entity" );
+		GameObject = new GameObject( true, GetType().Name );
+		GameObject.Flags |= GameObjectFlags.NotSaved;
 
 		All.Add( this );
 	}
