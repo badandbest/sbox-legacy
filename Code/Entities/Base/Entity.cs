@@ -74,8 +74,7 @@ public partial class Entity : IEntity
 	}
 
 	#region Unimplemented
-
-	public IEntity Owner { get; }
+	
 	public IClient Client { get; }
 	public int Id { get; }
 	public bool IsDormant { get; }

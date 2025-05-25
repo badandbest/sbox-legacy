@@ -5,15 +5,27 @@ namespace Legacy;
 
 public partial class Entity
 {
-	internal Entity parent = null!;
+	private Entity _parent = null!;
+	private Entity _owner = null!;
 
 	IEntity IEntity.Parent => Parent;
+	IEntity IEntity.Owner => _owner;
 
-	public virtual Entity Parent
-	{
-		get => parent;
-		set => SetParent( value );
-	}
+	/// <summary>
+	/// What this entity is parented to, if anything. Will make this entity move with it's parent, but loses collisions.
+	/// </summary>
+	[Hide]
+	public virtual Entity Parent { get => _parent; set => SetParent( value ); }
+
+	/// <summary>
+	/// Gets the top most parent entity. If we don't have a parent, it might be us.
+	/// </summary>
+	[Hide]
+	public virtual Entity Root => Parent?.Root ?? this;
+
+	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
+	[Hide]
+	public virtual Entity Owner { get => _owner; set => _owner = value; }
 
 	/// <summary>
 	/// All entities that are parented to this entity.
@@ -25,11 +37,11 @@ public partial class Entity
 	/// </summary>
 	public virtual void SetParent( Entity entity )
 	{
-		parent?.Children.Remove( this );
+		_parent?.Children.Remove( this );
 
-		parent = entity;
+		_parent = entity;
 
-		parent?.Children.Add( this );
+		_parent?.Children.Add( this );
 		GameObject.SetParent( entity?.GameObject );
 	}
 
