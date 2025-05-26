@@ -31,6 +31,7 @@ public partial class Entity : IEntity
 		var wrapper = GameObject.AddComponent<EntityWrapper>();
 		wrapper.Entity = this;
 
+		Components = new EntityComponentSystem( this );
 		All.Add( this );
 	}
 
@@ -79,8 +80,6 @@ public partial class Entity : IEntity
 	public string TagList { get; set; }
 
 	public Vector3 Velocity { get; set; }
-
-	public IComponentSystem Components { get; }
 
 	#endregion
 }
