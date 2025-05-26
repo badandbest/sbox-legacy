@@ -45,6 +45,17 @@ public partial class Entity
 		GameObject.SetParent( entity?.GameObject );
 	}
 
+	public void SetParent( Entity entity, bool boneMerge )
+	{
+		if ( boneMerge )
+		{
+			var target = GameObject.GetComponentInParent<SkinnedModelRenderer>( includeSelf: false );
+			GameObject.GetComponent<SkinnedModelRenderer>().BoneMergeTarget = target;
+		}
+
+		SetParent( entity );
+	}
+
 	#region World Transform
 
 	[Hide]
