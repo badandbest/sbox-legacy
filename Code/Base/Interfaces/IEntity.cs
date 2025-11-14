@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-namespace Legacy.Entities.Components.Interfaces;
+namespace Legacy;
 
 /// <summary>
 /// A generic entity.

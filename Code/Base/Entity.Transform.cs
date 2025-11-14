@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Legacy.Entities.Components.Interfaces;
 using Sandbox;
 
 namespace Legacy;

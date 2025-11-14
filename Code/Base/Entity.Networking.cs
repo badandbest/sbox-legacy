@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using Legacy.Entities.Components.Interfaces;
 using Sandbox;
 
 namespace Legacy;
