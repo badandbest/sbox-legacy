@@ -85,6 +85,7 @@ internal sealed class InternalGameManager( Scene scene )
 		Listen( Stage.StartFixedUpdate, 0, () => Current.Simulate( Game.LocalClient ), nameof( Current.Simulate ) );
 		Listen( Stage.StartUpdate, 0, () => Current.FrameSimulate( Game.LocalClient ), nameof( Current.FrameSimulate ) );
 		Listen( Stage.StartUpdate, 1, () => Current.BuildInput(), nameof( Current.BuildInput ) );
+		Listen( Stage.FinishUpdate, 0, () => GameEvent.Run( "camera.post" ), "camera.post" );
 	}
 
 	public void OnActive( Connection channel )

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Sandbox;
 
 namespace Legacy;
 
@@ -21,6 +20,11 @@ public class BaseViewModel : AnimatedEntity
 		AllViewModels.Add( this );
 	}
 
+	public override void Spawn()
+	{
+		Renderer.RenderType = Sandbox.ModelRenderer.ShadowRenderType.Off;
+	}
+
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
@@ -31,7 +35,7 @@ public class BaseViewModel : AnimatedEntity
 	/// <summary>
 	/// Position your view model here.
 	/// </summary>
-	// [GameEvent.Client.PostCamera]
+	[GameEvent.Client.PostCamera]
 	public virtual void PlaceViewmodel()
 	{
 		Position = Camera.Position;

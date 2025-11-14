@@ -40,4 +40,9 @@ public static class GameEvent
 			}
 		}
 	}
+
+	public static class Client
+	{
+		public sealed class PostCameraAttribute() : EventAttribute( "camera.post" );
+	}
 }

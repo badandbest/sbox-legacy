@@ -41,7 +41,34 @@ public static class Camera
 	/// The current camera's first person viewer. If set then the entity that is viewing
 	/// will be invisible, and entities marked as viewmodels will be visible.
 	/// </summary>
-	public static IEntity FirstPersonViewer { get; set; }
+	public static IEntity FirstPersonViewer
+	{
+		get; set
+		{
+			if ( field == value )
+			{
+				return;
+			}
+
+			if ( field is ModelEntity { GameObject: var oldViewer } )
+			{
+				foreach ( var renderer in oldViewer.GetComponentsInChildren<ModelRenderer>() )
+				{
+					renderer.RenderType = ModelRenderer.ShadowRenderType.On;
+				}
+			}
+
+			field = value;
+
+			if ( field is ModelEntity { GameObject: var newViewer } )
+			{
+				foreach ( var renderer in newViewer.GetComponentsInChildren<ModelRenderer>() )
+				{
+					renderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+				}
+			}
+		}
+	}
 
 	/// <summary>
 	/// The current camera's size (in pixels)
