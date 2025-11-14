@@ -25,7 +25,7 @@ public partial class Entity
 
 	public static implicit operator GameObject( Entity entity ) => entity.GameObject;
 
-	public static implicit operator Entity( GameObject gameObject ) => gameObject.GetComponent<EntityBinder>().Entity;
+	public static implicit operator Entity( GameObject gameObject ) => gameObject?.GetComponent<EntityBinder>()?.Entity;
 }
 
 [Title( "Entity" )]
