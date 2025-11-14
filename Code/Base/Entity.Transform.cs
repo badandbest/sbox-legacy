@@ -1,21 +1,25 @@
 ﻿using System.Collections.Generic;
+using Legacy.Entities.Components.Interfaces;
 using Sandbox;
 
 namespace Legacy;
 
 public partial class Entity
 {
-	private Entity _parent = null!;
-	private Entity _owner = null!;
-
+	[Hide]
 	IEntity IEntity.Parent => Parent;
-	IEntity IEntity.Owner => _owner;
+	[Hide]
+	IEntity IEntity.Owner => Owner;
 
 	/// <summary>
 	/// What this entity is parented to, if anything. Will make this entity move with it's parent, but loses collisions.
 	/// </summary>
 	[Hide]
-	public virtual Entity Parent { get => _parent; set => SetParent( value ); }
+	public virtual Entity Parent
+	{
+		get => GameObject.Parent;
+		set => GameObject.Parent = value;
+	}
 
 	/// <summary>
 	/// Gets the top most parent entity. If we don't have a parent, it might be us.
@@ -25,25 +29,17 @@ public partial class Entity
 
 	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
 	[Hide]
-	public virtual Entity Owner { get => _owner; set => _owner = value; }
+	public virtual Entity Owner { get; set; }
 
 	/// <summary>
 	/// All entities that are parented to this entity.
 	/// </summary>
-	public List<Entity> Children { get; } = [];
+	public List<Entity> Children => [.. GameObject.Children];
 
 	/// <summary>
 	/// Become a child of this entity.
 	/// </summary>
-	public virtual void SetParent( Entity entity )
-	{
-		_parent?.Children.Remove( this );
-
-		_parent = entity;
-
-		_parent?.Children.Add( this );
-		GameObject.SetParent( entity?.GameObject );
-	}
+	public virtual void SetParent( Entity entity ) => GameObject.SetParent( entity );
 
 	public void SetParent( Entity entity, bool boneMerge )
 	{

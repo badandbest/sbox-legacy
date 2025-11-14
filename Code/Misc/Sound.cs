@@ -82,6 +82,6 @@ public readonly struct Sound( SoundHandle handle )
 		var sound = ResourceLibrary.Get<SoundEvent>( name );
 		var camera = Sandbox.Game.ActiveScene.Camera.GameObject;
 
-		return new Sound( camera.PlaySound( sound, new(x, y) ) );
+		return new Sound( camera.PlaySound( sound, new( x, y ) ) );
 	}
 }

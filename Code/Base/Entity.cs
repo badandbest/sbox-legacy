@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Legacy.Entities.Components.Interfaces;
 using Sandbox;
 
 namespace Legacy;
@@ -15,22 +16,10 @@ public partial class Entity : IEntity
 	public static List<Entity> All { get; } = [];
 
 	/// <summary>
-	/// The game object this entity belongs to.
-	/// </summary>
-	[Hide]
-	public GameObject GameObject { get; }
-
-	/// <summary>
 	/// Create the entity.
 	/// </summary>
-	public Entity()
+	public Entity() : this( new GameObject() )
 	{
-		GameObject = new GameObject( true, GetType().Name );
-		GameObject.Flags |= GameObjectFlags.NotSaved;
-
-		var wrapper = GameObject.AddComponent<EntityWrapper>();
-		wrapper.Entity = this;
-
 		Components = new EntityComponentSystem( this );
 		All.Add( this );
 	}

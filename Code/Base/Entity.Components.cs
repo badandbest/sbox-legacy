@@ -4,18 +4,32 @@ using System.Linq;
 
 namespace Legacy;
 
+public partial class Entity
+{
+	/// <summary>
+	/// Components of this entity.
+	/// </summary>
+	public IComponentSystem Components { get; }
+
+	/// <summary>
+	/// A component has been added to the entity.
+	/// </summary>
+	protected internal virtual void OnComponentAdded( EntityComponent component ) { }
+
+	/// <summary>
+	/// A component has been removed from the entity.
+	/// </summary>
+	protected internal virtual void OnComponentRemoved( EntityComponent component ) { }
+}
+
 internal class EntityComponentSystem( Entity entity ) : IComponentSystem
 {
 	private List<EntityComponent> list = [];
 
-	/// <summary>
-	/// The amount of components - including inactive
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.Count"/>
 	public int Count => list.Count;
 
-	/// <summary>
-	/// Create the component
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.Create"/>
 	public T Create<T>( bool startEnabled = true ) where T : EntityComponent, new()
 	{
 		var component = new T { Enabled = startEnabled };
@@ -24,9 +38,7 @@ internal class EntityComponentSystem( Entity entity ) : IComponentSystem
 		return component;
 	}
 
-	/// <summary>
-	/// Add a component to this entity
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.Add"/>
 	public bool Add( EntityComponent component )
 	{
 		if ( !component.CanAddToEntity( entity ) )
@@ -46,9 +58,7 @@ internal class EntityComponentSystem( Entity entity ) : IComponentSystem
 		return true;
 	}
 
-	/// <summary>
-	/// Remove given component from this entity
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.Remove"/>
 	public bool Remove( EntityComponent c )
 	{
 		if ( !list.Contains( c ) ) return false;
@@ -59,50 +69,38 @@ internal class EntityComponentSystem( Entity entity ) : IComponentSystem
 		return true;
 	}
 
-	/// <summary>
-	/// Remove all components of given type
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.RemoveAny"/>
 	public bool RemoveAny<T>() where T : EntityComponent
 	{
 		return list.RemoveAll( c => c is T ) > 0;
 	}
 
-	/// <summary>
-	/// Remove all components to this entity
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.RemoveAll"/>
 	public void RemoveAll()
 	{
 		list.ForEach( c => Remove( c ) );
 	}
 
-	/// <summary>
-	/// Get a component by type, if it exists
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.Get"/>
 	public T Get<T>( bool includeDisabled = false ) where T : EntityComponent
 	{
 		return list.OfType<T>().FirstOrDefault( c => c.Enabled );
 	}
 
-	/// <summary>
-	/// Returns true if component was found, else false
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.TryGet"/>
 	public bool TryGet<T>( out T component, bool includeDisabled = false ) where T : EntityComponent
 	{
 		component = Get<T>( includeDisabled );
 		return component != null;
 	}
 
-	/// <summary>
-	/// Get all components by type, if any exist
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.GetAll"/>
 	public IEnumerable<T> GetAll<T>( bool includeDisabled = false ) where T : EntityComponent
 	{
 		return list.OfType<T>().Where( c => c.Enabled ).ToList();
 	}
 
-	/// <summary>
-	/// Get the component, create if it doesn't exist. Will include disabled components in search.
-	/// </summary>
+	/// <inheritdoc cref="IComponentSystem.GetOrCreate"/>
 	public T GetOrCreate<T>( bool startEnabled = true ) where T : EntityComponent, new()
 	{
 		return TryGet<T>( out var component ) ? component : Create<T>( startEnabled );
@@ -110,9 +108,9 @@ internal class EntityComponentSystem( Entity entity ) : IComponentSystem
 
 	private void RemoveSingletons( Type type )
 	{
-		if ( !type.IsAssignableTo( typeof(ISingletonComponent) ) ) return;
+		if ( !type.IsAssignableTo( typeof( ISingletonComponent ) ) ) return;
 
-		while ( type.BaseType!.IsAssignableTo( typeof(ISingletonComponent) ) )
+		while ( type.BaseType!.IsAssignableTo( typeof( ISingletonComponent ) ) )
 		{
 			type = type.BaseType;
 		}

@@ -1,6 +1,6 @@
-﻿namespace Legacy;
+﻿using Sandbox;
 
-using Sandbox;
+namespace Legacy;
 
 public struct TraceResult( SceneTraceResult result )
 {
@@ -42,7 +42,7 @@ public struct TraceResult( SceneTraceResult result )
 	/// <summary>
 	/// The entity that was hit, if any
 	/// </summary>
-	public Entity Entity = result.GameObject?.GetComponent<EntityWrapper>()?.Entity;
+	public Entity Entity = result.GameObject;
 
 	/// <summary>
 	/// The physics object that was hit, if any

@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Legacy.Entities.Components.Interfaces;
+using Sandbox;
 
 namespace Legacy;
 

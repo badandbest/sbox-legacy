@@ -82,9 +82,9 @@ internal sealed class InternalGameManager( Scene scene )
 
 	public void OnClientInitialize()
 	{
-		Listen( Stage.StartFixedUpdate, 0, () => Current.Simulate( Game.LocalClient ), nameof(Current.Simulate) );
-		Listen( Stage.StartUpdate, 0, () => Current.FrameSimulate( Game.LocalClient ), nameof(Current.FrameSimulate) );
-		Listen( Stage.StartUpdate, 1, () => Current.BuildInput(), nameof(Current.BuildInput) );
+		Listen( Stage.StartFixedUpdate, 0, () => Current.Simulate( Game.LocalClient ), nameof( Current.Simulate ) );
+		Listen( Stage.StartUpdate, 0, () => Current.FrameSimulate( Game.LocalClient ), nameof( Current.FrameSimulate ) );
+		Listen( Stage.StartUpdate, 1, () => Current.BuildInput(), nameof( Current.BuildInput ) );
 	}
 
 	public void OnActive( Connection channel )
