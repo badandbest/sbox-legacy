@@ -40,15 +40,29 @@ public partial class Entity
 	/// </summary>
 	public virtual void SetParent( Entity entity ) => GameObject.SetParent( entity );
 
+	/// <summary>
+	/// Set the parent to the passed entity
+	/// </summary>
+	/// <param name="entity"></param>
+	/// <param name="boneMerge"></param>
 	public void SetParent( Entity entity, bool boneMerge )
 	{
+		SetParent( entity );
+
 		if ( boneMerge )
 		{
-			var target = GameObject.GetComponentInParent<SkinnedModelRenderer>( includeSelf: false );
-			GameObject.GetComponent<SkinnedModelRenderer>().BoneMergeTarget = target;
-		}
+			if ( this is not AnimatedEntity { Renderer: var self } )
+			{
+				return;
+			}
 
-		SetParent( entity );
+			if ( entity is not AnimatedEntity { Renderer: var target } )
+			{
+				return;
+			}
+
+			self.BoneMergeTarget = target;
+		}
 	}
 
 	#region World Transform
