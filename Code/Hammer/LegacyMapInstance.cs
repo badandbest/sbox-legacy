@@ -33,4 +33,12 @@ public class LegacyMapInstance : MapInstance
 		entity.Transform = kv.Transform;
 		entity.GameObject.SetParent( GameObject );
 	}
+
+	protected override void OnStart()
+	{
+		base.OnStart();
+
+		var collider = GetComponentInChildren<MapCollider>();
+		new Entity( collider.GameObject );
+	}
 }

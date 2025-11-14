@@ -21,6 +21,9 @@ public partial class Entity
 
 		var wrapper = GameObject.AddComponent<EntityBinder>();
 		wrapper.Entity = this;
+
+		Components = new EntityComponentSystem( this );
+		All.Add( this );
 	}
 
 	public static implicit operator GameObject( Entity entity ) => entity.GameObject;

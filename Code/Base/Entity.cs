@@ -17,11 +17,7 @@ public partial class Entity : IEntity
 	/// <summary>
 	/// Create the entity.
 	/// </summary>
-	public Entity() : this( new GameObject() )
-	{
-		Components = new EntityComponentSystem( this );
-		All.Add( this );
-	}
+	public Entity() : this( new GameObject() ) { }
 
 	public bool IsValid => GameObject.IsValid();
 

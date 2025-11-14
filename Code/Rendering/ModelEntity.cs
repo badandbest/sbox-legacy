@@ -6,6 +6,12 @@ public class ModelEntity : Entity
 {
 	internal virtual ModelRenderer Renderer => GameObject.GetOrAddComponent<ModelRenderer>();
 
+	/// <summary>
+	/// The <see cref="P:Sandbox.ModelEntity.SceneObject" /> that represents this entity.
+	/// </summary>
+	[Hide]
+	public virtual SceneObject SceneObject => Renderer.SceneObject;
+
 	public ModelEntity()
 	{
 	}
@@ -33,6 +39,16 @@ public class ModelEntity : Entity
 			Renderer.Model = value;
 			OnNewModel( value );
 		}
+	}
+
+	/// <summary>
+	/// The collision bounds.
+	/// </summary>
+	[Hide]
+	public BBox CollisionBounds
+	{
+		get => SceneObject.Bounds;
+		set => SceneObject.Bounds = value;
 	}
 
 	/// <summary>
