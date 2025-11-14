@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sandbox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,11 @@ public partial class Entity
 	/// A component has been removed from the entity.
 	/// </summary>
 	protected internal virtual void OnComponentRemoved( EntityComponent component ) { }
+
+	protected T BindComponent<T>( WrappedPropertyGet<T> _ ) where T : EntityComponent, new()
+	{
+		return Components.GetOrCreate<T>();
+	}
 }
 
 internal class EntityComponentSystem( Entity entity ) : IComponentSystem
