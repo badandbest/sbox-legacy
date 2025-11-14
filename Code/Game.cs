@@ -1,6 +1,5 @@
 ﻿using Sandbox;
 using Sandbox.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +26,14 @@ public static class Game
 	/// Returns true only when current code is running on the server.
 	/// </summary>
 	public static bool IsServer => Networking.IsHost;
+
+	/// <summary>
+	/// Set the seed for Game.Random
+	/// </summary>
+	public static void SetRandomSeed( int seed )
+	{
+		Sandbox.Game.SetRandomSeed( seed );
+	}
 
 	/// <summary>
 	/// Holds information about the current user's preferences.
