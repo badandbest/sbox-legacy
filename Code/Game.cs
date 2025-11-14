@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using Sandbox.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +14,7 @@ public static class Game
 	/// <summary>
 	/// The local client. This is you if you're connecting to the server.
 	/// </summary>
-	public static IClient LocalClient => Clients.FirstOrDefault( cl => cl.SteamId == Steam.SteamId );
+	public static IClient LocalClient => Clients.FirstOrDefault( cl => cl.SteamId == Connection.Local.SteamId );
 
 	/// <summary>
 	/// The local client's pawn. This is probably a player, or a vehicle, or a melon.
