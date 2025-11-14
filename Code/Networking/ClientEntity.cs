@@ -26,7 +26,7 @@ internal sealed class ClientEntity( Connection connection ) : Entity, IClient
 	public bool IsUsingVr => throw new NotImplementedException();
 	public int PacketLoss => throw new NotImplementedException();
 	public IClient.IVoice Voice => throw new NotImplementedException();
-	public string GetClientData( string key, string defaultValue = null ) => throw new NotImplementedException();
+	public string GetClientData( string key, string defaultValue = null ) => connection.GetUserData( key );
 	public T GetClientData<T>( string key, T defaultValue = default ) => throw new NotImplementedException();
 	public void SendCommandToClient( string command ) => throw new NotImplementedException();
 	public void SetValue( string key, object value ) => throw new NotImplementedException();

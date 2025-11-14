@@ -16,4 +16,11 @@ public static class SceneSystemExtensions
 	{
 		public static int Tick => (Time.Now / Sandbox.Game.ActiveScene.FixedDelta).CeilToInt();
 	}
+
+	extension( ClothingContainer source )
+	{
+		public void LoadFromClient( IClient cl ) => source.Deserialize( Connection.Local.GetUserData( "avatar" ) );
+
+		public void DressEntity( AnimatedEntity entity ) => source.Apply( entity.Renderer );
+	}
 }
