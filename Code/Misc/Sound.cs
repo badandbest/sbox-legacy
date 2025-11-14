@@ -27,7 +27,7 @@ public readonly struct Sound( SoundHandle handle )
 	/// <summary>
 	/// Return the elapsed time from the start of the sound in seconds.
 	/// </summary>
-	public float ElapsedTime => handle.ElapsedTime;
+	public float ElapsedTime => handle.Time;
 
 	/// <summary>
 	/// Return if sound has finished playing.
