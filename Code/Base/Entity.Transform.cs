@@ -33,6 +33,7 @@ public partial class Entity
 	/// <summary>
 	/// All entities that are parented to this entity.
 	/// </summary>
+	[Hide]
 	public List<Entity> Children => [.. GameObject.Children];
 
 	/// <summary>
