@@ -47,61 +47,6 @@
         }
       ],
       "Children": []
-    },
-    {
-      "__guid": "d60bcb75-9408-45e5-8a0c-957a8105c2d4",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "World",
-      "Position": "0,0,0",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "world",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "NetworkTransmit": true,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Legacy.LegacyMapInstance",
-          "__guid": "b07a0f53-f589-404e-8c93-f5a1d3d35605",
-          "__enabled": true,
-          "__version": 1,
-          "EnableCollision": true,
-          "MapName": "facepunch.flatgrass",
-          "NoOrigin": false,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "OnMapLoaded": null,
-          "OnMapUnloaded": null,
-          "UseMapFromLaunch": true
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "52338a49-7181-4571-9af7-d0863ba68d5c",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "ControlObject",
-      "Position": "41.95264,238.1731,25.59888",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "NetworkTransmit": true,
-      "OwnerTransfer": 1,
-      "Components": [],
-      "Children": []
     }
   ],
   "SceneProperties": {

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Sandbox;
 using Sandbox.Network;
+using System.Threading.Tasks;
 using static Legacy.GameManager;
 
 namespace Legacy;
@@ -63,6 +64,11 @@ public abstract class GameManager : Entity
 		}
 	}
 
+	/// <summary>
+	/// Clientside only. Called every frame to process the input.
+	/// The results of this input are encoded into a user command and passed to the PlayerController both clientside and serverside.
+	/// This routine is mainly responsible for taking input from mouse/controller and building look angles and move direction.
+	/// </summary>
 	public override void BuildInput()
 	{
 		Game.LocalPawn?.BuildInput();
@@ -70,22 +76,42 @@ public abstract class GameManager : Entity
 }
 
 internal sealed class InternalGameManager( Scene scene )
-	: GameObjectSystem( scene ), ISceneStartup, Component.INetworkListener
+	: GameObjectSystem( scene ), ISceneLoadingEvents, Component.INetworkListener
 {
-	public void OnHostInitialize()
+	/// <summary>
+	/// Load map.
+	/// </summary>
+	public async Task OnLoad( Scene scene, SceneLoadOptions options )
 	{
-		var gameManager = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract );
-		Current = gameManager.Create<GameManager>();
+		var map = LaunchArguments.Map;
 
-		Networking.CreateLobby( new LobbyConfig() );
+		if ( Package.TryParseIdent( map, out var parsed ) )
+		{
+			var package = await Package.FetchAsync( map, false );
+			var files = await package.MountAsync();
+
+			map = package.PrimaryAsset;
+		}
+
+		_ = new Map( map, new LegacyMapLoader( scene.SceneWorld, scene.PhysicsWorld ) );
 	}
 
-	public void OnClientInitialize()
+	/// <summary>
+	/// Initialize GameManager.
+	/// </summary>
+	/// <param name="scene"></param>
+	public void AfterLoad( Scene scene )
 	{
+		if ( Sandbox.Game.InGame ) return;
+
+		Current = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract ).Create<GameManager>();
+
 		Listen( Stage.StartFixedUpdate, 0, () => Current.Simulate( Game.LocalClient ), nameof( Current.Simulate ) );
 		Listen( Stage.StartUpdate, 0, () => Current.FrameSimulate( Game.LocalClient ), nameof( Current.FrameSimulate ) );
 		Listen( Stage.StartUpdate, 1, () => Current.BuildInput(), nameof( Current.BuildInput ) );
 		Listen( Stage.FinishUpdate, 0, () => GameEvent.Run( "camera.post" ), "camera.post" );
+
+		Networking.CreateLobby( new LobbyConfig() );
 	}
 
 	public void OnActive( Connection channel )
