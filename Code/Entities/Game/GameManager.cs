@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Sandbox;
-using Sandbox.Network;
-using System.Threading.Tasks;
-using static Legacy.GameManager;
+using System.Collections.Generic;
 
 namespace Legacy;
 
@@ -75,57 +73,28 @@ public abstract class GameManager : Entity
 	}
 }
 
-internal sealed class InternalGameManager( Scene scene )
-	: GameObjectSystem( scene ), ISceneLoadingEvents, Component.INetworkListener
+/// <summary>
+/// Loads entities with <see cref="HammerEntityAttribute"/>.
+/// </summary>
+public class LegacyMapLoader : SceneMapLoader
 {
-	/// <summary>
-	/// Load map.
-	/// </summary>
-	public async Task OnLoad( Scene scene, SceneLoadOptions options )
-	{
-		var map = LaunchArguments.Map;
+	public Dictionary<string, TypeDescription> HammerEntities { get; private set; }
 
-		if ( Package.TryParseIdent( map, out var parsed ) )
+	public LegacyMapLoader( SceneWorld world, PhysicsWorld physics ) : base( world, physics )
+	{
+		var hammerEntities = TypeLibrary.GetTypesWithAttribute<HammerEntityAttribute>().Select( t => t.Type );
+		HammerEntities = hammerEntities.ToDictionary( t => t.GetAttribute<LibraryAttribute>().Name );
+	}
+
+	protected override void CreateObject( ObjectEntry kv )
+	{
+		if ( HammerEntities.TryGetValue( kv.TypeName, out var type ) )
 		{
-			var package = await Package.FetchAsync( map, false );
-			var files = await package.MountAsync();
-
-			map = package.PrimaryAsset;
+			type.Create<Entity>();
 		}
-
-		_ = new Map( map, new LegacyMapLoader( scene.SceneWorld, scene.PhysicsWorld ) );
-	}
-
-	/// <summary>
-	/// Initialize GameManager.
-	/// </summary>
-	/// <param name="scene"></param>
-	public void AfterLoad( Scene scene )
-	{
-		if ( Sandbox.Game.InGame ) return;
-
-		Current = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract ).Create<GameManager>();
-
-		Listen( Stage.StartFixedUpdate, 0, () => Current.Simulate( Game.LocalClient ), nameof( Current.Simulate ) );
-		Listen( Stage.StartUpdate, 0, () => Current.FrameSimulate( Game.LocalClient ), nameof( Current.FrameSimulate ) );
-		Listen( Stage.StartUpdate, 1, () => Current.BuildInput(), nameof( Current.BuildInput ) );
-		Listen( Stage.FinishUpdate, 0, () => GameEvent.Run( "camera.post" ), "camera.post" );
-
-		Networking.CreateLobby( new LobbyConfig() );
-	}
-
-	public void OnActive( Connection channel )
-	{
-		var cl = new ClientEntity( channel );
-
-		Current.ClientJoined( cl );
-	}
-
-	public void OnDisconnected( Connection channel )
-	{
-		var cl = Game.Clients.Single( cl => cl.SteamId == channel.SteamId );
-
-		Current.ClientDisconnect( cl );
-		cl.Delete();
+		else
+		{
+			CreateModel( kv );
+		}
 	}
 }

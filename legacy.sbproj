@@ -8,18 +8,22 @@
   "Resources": null,
   "PackageReferences": [],
   "EditorReferences": null,
+  "Mounts": null,
   "IsStandaloneOnly": false,
   "Metadata": {
     "CsProjName": "Entity System",
     "Compiler": {
       "RootNamespace": "Legacy",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
-      "NoWarn": "1701;1702;1591;",
+      "NoWarn": "CS1591;IDE0130",
       "WarningsAsErrors": "",
       "TreatWarningsAsErrors": false,
       "Nullables": false,
       "ReleaseMode": "Debug",
       "AssemblyReferences": [],
+      "ReplacementDirectives": {
+        ".Server.cs": "SERVER"
+      },
       "IgnoreFolders": [],
       "DistinctAssemblyReferences": []
     }
