@@ -10,7 +10,7 @@ public static class Camera
 	/// <summary>
 	/// The current game's camera, which is used to render the main view
 	/// </summary>
-	public static CameraComponent Main => Sandbox.Game.ActiveScene.Camera;
+	public static CameraComponent Main => Game.ActiveScene.Camera;
 
 	/// <summary>
 	/// The current camera's position. If current is null, falls back to main camera.

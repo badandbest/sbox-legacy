@@ -9,7 +9,7 @@ namespace Legacy;
 /// </summary>
 public struct Trace( SceneTrace trace )
 {
-	private static SceneTrace SceneTrace => Sandbox.Game.SceneTrace;
+	private static SceneTrace SceneTrace => Game.SceneTrace;
 
 	/// <summary>
 	/// Casts a sphere from point A to point B.

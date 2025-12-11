@@ -14,7 +14,7 @@ public static class SceneSystemExtensions
 
 	extension( Time )
 	{
-		public static int Tick => (Time.Now / Sandbox.Game.ActiveScene.FixedDelta).CeilToInt();
+		public static int Tick => (Time.Now / Game.ActiveScene.FixedDelta).CeilToInt();
 	}
 
 	extension( ClothingContainer source )

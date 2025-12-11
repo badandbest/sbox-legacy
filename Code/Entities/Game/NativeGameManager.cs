@@ -32,7 +32,7 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 	/// <param name="scene"></param>
 	public void AfterLoad( Scene scene )
 	{
-		if ( Sandbox.Game.InGame ) return;
+		if ( Game.InGame ) return;
 
 		Current = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract ).Create<GameManager>();
 
