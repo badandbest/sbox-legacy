@@ -37,8 +37,6 @@ public partial class Entity : IEntity
 	#region Unimplemented
 
 	public BBox WorldSpaceBounds { get; }
-	public string TagList { get; set; }
-
 	public Vector3 Velocity { get; set; }
 
 	#endregion
