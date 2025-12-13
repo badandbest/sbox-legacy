@@ -34,11 +34,11 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 	{
 		if ( Game.InGame ) return;
 
-		Current = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract ).Create<GameManager>();
+		var manager = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract ).Create<GameManager>();
 
-		Listen( Stage.StartFixedUpdate, 0, () => Current.Simulate( Game.LocalClient ), nameof( Current.Simulate ) );
-		Listen( Stage.StartUpdate, 0, () => Current.FrameSimulate( Game.LocalClient ), nameof( Current.FrameSimulate ) );
-		Listen( Stage.StartUpdate, 1, () => Current.BuildInput(), nameof( Current.BuildInput ) );
+		Listen( Stage.StartFixedUpdate, 0, () => manager.Simulate( Game.LocalClient ), nameof( manager.Simulate ) );
+		Listen( Stage.StartUpdate, 0, () => manager.FrameSimulate( Game.LocalClient ), nameof( manager.FrameSimulate ) );
+		Listen( Stage.StartUpdate, 1, () => manager.BuildInput(), nameof( manager.BuildInput ) );
 		Listen( Stage.FinishUpdate, 0, () => GameEvent.Run( "camera.post" ), "camera.post" );
 
 		Networking.CreateLobby( new LobbyConfig() );

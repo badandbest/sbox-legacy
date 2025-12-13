@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Sandbox;
+﻿using Sandbox;
 
 namespace Legacy;
 
@@ -9,18 +8,6 @@ namespace Legacy;
 [Library( "entity" )]
 public partial class Entity : IEntity
 {
-	/// <summary>
-	/// A list of all active entities.
-	/// </summary>
-	public static List<Entity> All { get; } = [];
-
-	/// <summary>
-	/// Create the entity.
-	/// </summary>
-	public Entity() : this( new GameObject() ) { }
-
-	public bool IsValid => GameObject.IsValid();
-
 	/// <summary>
 	/// Called when the entity is spawned in. It should have all properties set by this point.
 	/// This is the place to set up your entity.
@@ -46,17 +33,6 @@ public partial class Entity : IEntity
 	/// Called when the entity was destroyed. This is not the same as the class destructor.
 	/// </summary>
 	protected virtual void OnDestroy() { }
-
-	/// <summary>
-	/// Delete this entity. You shouldn't access it anymore.
-	/// </summary>
-	public void Delete()
-	{
-		OnDestroy();
-
-		All.Remove( this );
-		GameObject.Destroy();
-	}
 
 	#region Unimplemented
 

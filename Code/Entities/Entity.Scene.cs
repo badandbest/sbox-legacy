@@ -1,9 +1,16 @@
 ﻿using Sandbox;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Legacy;
 
 public partial class Entity
 {
+	/// <summary>
+	/// A list of all active entities.
+	/// </summary>
+	public static IReadOnlyList<Entity> All => [.. Game.ActiveScene.GetAll<EntityBinder>().Select( b => b.Entity )];
+
 	/// <summary>
 	/// The game object this entity is bindined to.
 	/// </summary>
@@ -11,27 +18,33 @@ public partial class Entity
 	internal GameObject GameObject { get; }
 
 	/// <summary>
-	/// Binds an entity to a game object.
+	/// Create the entity.
 	/// </summary>
-	internal Entity( GameObject go )
+	public Entity()
 	{
-		GameObject = go;
-		GameObject.Name = GetType().Name;
-		GameObject.Flags |= GameObjectFlags.NotSaved;
-
-		var wrapper = GameObject.AddComponent<EntityBinder>();
-		wrapper.Entity = this;
+		GameObject = new()
+		{
+			Name = GetType().Name,
+			Flags = GameObjectFlags.NotSaved
+		};
+		GameObject.AddComponent<EntityBinder>().Entity = this;
 
 		Components = new EntityComponentSystem( this );
-		All.Add( this );
 	}
+
+	public bool IsValid => GameObject.IsValid();
+
+	/// <summary>
+	/// Delete this entity. You shouldn't access it anymore.
+	/// </summary>
+	public void Delete() => GameObject.Destroy();
 
 	public static implicit operator GameObject( Entity entity ) => entity.GameObject;
 
 	public static implicit operator Entity( GameObject gameObject ) => gameObject?.GetComponent<EntityBinder>()?.Entity;
 }
 
-[Title( "Entity" )]
+[Title( "Entity" ), Tint( EditorTint.White )]
 file sealed class EntityBinder : Component
 {
 	[Property, InlineEditor]

@@ -13,7 +13,7 @@ public abstract class GameManager : Entity
 	/// <summary>
 	/// Currently active game entity.
 	/// </summary>
-	public static GameManager Current { get; protected internal set; }
+	public static GameManager Current => All.OfType<GameManager>().Single();
 
 	/// <summary>
 	/// Client has joined the server. Create their puppets.
