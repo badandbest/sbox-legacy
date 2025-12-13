@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sandbox;
+using System.Collections.Generic;
 
 namespace Legacy;
 
@@ -22,7 +23,7 @@ public class BaseViewModel : AnimatedEntity
 
 	public override void Spawn()
 	{
-		Renderer.RenderType = Sandbox.ModelRenderer.ShadowRenderType.Off;
+		Renderer.RenderType = ModelRenderer.ShadowRenderType.Off;
 	}
 
 	protected override void OnDestroy()
@@ -42,7 +43,7 @@ public class BaseViewModel : AnimatedEntity
 		Rotation = Camera.Rotation;
 	}
 
-	public override Sound PlaySound( string soundName, string attachment )
+	public override SoundHandle PlaySound( string soundName, string attachment )
 	{
 		return Owner?.PlaySound( soundName, attachment ) ?? base.PlaySound( soundName, attachment );
 	}

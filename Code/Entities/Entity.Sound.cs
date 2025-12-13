@@ -1,4 +1,6 @@
-﻿namespace Legacy;
+﻿using Sandbox;
+
+namespace Legacy;
 
 public partial class Entity
 {
@@ -7,7 +9,7 @@ public partial class Entity
 	/// </summary>
 	/// <param name="soundName">The sound to play.</param>
 	/// <returns>The sound controller.</returns>
-	public Sound PlaySound( string soundName )
+	public SoundHandle PlaySound( string soundName )
 	{
 		return Sound.FromEntity( soundName, this );
 	}
@@ -18,7 +20,7 @@ public partial class Entity
 	/// <param name="soundName">The sound to play.</param>
 	/// <param name="attachment">Name of the attachment to play the sound at.</param>
 	/// <returns>The sound controller.</returns>
-	public virtual Sound PlaySound( string soundName, string attachment )
+	public virtual SoundHandle PlaySound( string soundName, string attachment )
 	{
 		return Sound.FromEntity( soundName, this, attachment );
 	}
