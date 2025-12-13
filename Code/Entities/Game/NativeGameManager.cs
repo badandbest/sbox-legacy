@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Sandbox;
 using Sandbox.Network;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static Legacy.GameManager;
 
@@ -14,6 +15,7 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 	public async Task OnLoad( Scene scene, SceneLoadOptions options )
 	{
 		var map = LaunchArguments.Map;
+		map ??= "facepunch.flatgrass";
 
 		if ( Package.TryParseIdent( map, out var parsed ) )
 		{
@@ -23,7 +25,10 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 			map = package.PrimaryAsset;
 		}
 
-		_ = new Map( map, new LegacyMapLoader( scene.SceneWorld, scene.PhysicsWorld ) );
+		var loader = new LegacyMapLoader( scene.SceneWorld, scene.PhysicsWorld );
+		_ = new Map( map, loader );
+
+		loader.AddCollision();
 	}
 
 	/// <summary>
@@ -32,7 +37,7 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 	/// <param name="scene"></param>
 	public void AfterLoad( Scene scene )
 	{
-		if ( Game.InGame ) return;
+		if ( !Game.InGame ) return;
 
 		var manager = TypeLibrary.GetTypes<GameManager>().Single( x => !x.IsAbstract ).Create<GameManager>();
 
@@ -57,5 +62,48 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 
 		Current.ClientDisconnect( cl );
 		cl.Delete();
+	}
+}
+
+/// <summary>
+/// Loads entities with <see cref="HammerEntityAttribute"/>.
+/// </summary>
+file class LegacyMapLoader : SceneMapLoader
+{
+	public Dictionary<string, TypeDescription> HammerEntities { get; private set; }
+
+	public LegacyMapLoader( SceneWorld world, PhysicsWorld physics ) : base( world, physics )
+	{
+		var hammerEntities = TypeLibrary.GetTypesWithAttribute<HammerEntityAttribute>().Select( t => t.Type );
+		HammerEntities = hammerEntities.ToDictionary( t => t.GetAttribute<LibraryAttribute>().Name );
+	}
+
+	protected override void CreateObject( ObjectEntry kv )
+	{
+		if ( HammerEntities.TryGetValue( kv.TypeName, out var type ) )
+		{
+			var entity = type.Create<Entity>();
+			entity.Rotation = kv.Rotation;
+			entity.Position = kv.Position;
+			entity.Scale = kv.Scales.x;
+			entity.Tags.Add( kv.Tags );
+			entity.Tags.Add( "world" );
+		}
+		else
+		{
+			CreateModel( kv );
+		}
+	}
+
+	public void AddCollision()
+	{
+		var physics = new Entity();
+		physics.GameObject.Name = "worldphysics";
+		physics.Tags.Add( "world" );
+
+		foreach ( var body in PhysicsWorld.Bodies )
+		{
+			body.GameObject = physics;
+		}
 	}
 }
