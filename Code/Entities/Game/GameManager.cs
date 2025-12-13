@@ -7,7 +7,7 @@ namespace Legacy;
 /// This is the main base game.
 /// </summary>
 [Category( "Setup" ), Title( "Game" ), Icon( "sports_esports" )]
-public abstract class GameManager : Entity
+public abstract partial class GameManager : Entity
 {
 	/// <summary>
 	/// Currently active game entity.
