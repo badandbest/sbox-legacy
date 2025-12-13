@@ -36,7 +36,7 @@ public static partial class GameExtensions
 		/// <summary>
 		/// Returns true only when current code is running on the client.
 		/// </summary>
-		public static bool IsClient => Networking.IsClient;
+		public static bool IsClient => !Application.IsHeadless;
 
 		/// <summary>
 		/// Holds information about the current user's preferences.
