@@ -25,7 +25,7 @@ public class BaseViewModel : AnimatedEntity
 		Renderer.RenderType = ModelRenderer.ShadowRenderType.Off;
 	}
 
-	protected override void OnDestroy()
+	protected internal override void OnDestroy()
 	{
 		base.OnDestroy();
 

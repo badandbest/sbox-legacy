@@ -30,7 +30,7 @@ public partial class Entity : IEntity
 	/// <summary>
 	/// Called when the entity was destroyed. This is not the same as the class destructor.
 	/// </summary>
-	protected virtual void OnDestroy() { }
+	protected internal virtual void OnDestroy() { }
 
 	#region Unimplemented
 

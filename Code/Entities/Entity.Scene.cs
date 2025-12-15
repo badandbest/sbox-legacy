@@ -50,5 +50,5 @@ file sealed class EntityBinder : Component
 	public Entity Entity { get; set; }
 
 	protected override void OnStart() => Entity.Spawn();
-	protected override void OnDestroy() => Entity.Delete();
+	protected override void OnDestroy() => Entity.OnDestroy();
 }
