@@ -1,4 +1,6 @@
-﻿namespace Sandbox;
+﻿using System;
+
+namespace Sandbox;
 
 public class ModelEntity : Entity
 {
@@ -45,8 +47,8 @@ public class ModelEntity : Entity
 	[Hide]
 	public BBox CollisionBounds
 	{
-		get => SceneObject.Bounds;
-		set => SceneObject.Bounds = value;
+		get => Model.Bounds;
+		set => throw new NotImplementedException();
 	}
 
 	/// <summary>
