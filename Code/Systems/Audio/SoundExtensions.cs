@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Legacy;
+﻿namespace Sandbox;
 
 /// <summary>
 /// Extensions for <see cref="Sound"/> that adds members from the old entity system.

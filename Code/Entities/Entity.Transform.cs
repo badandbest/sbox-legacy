@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 public partial class Entity
 {

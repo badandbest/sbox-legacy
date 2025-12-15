@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Legacy;
+﻿namespace Sandbox;
 
 /// <summary>
 /// A base entity all other entities derive from.

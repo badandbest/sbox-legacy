@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Legacy;
+﻿namespace Sandbox;
 
 // Hack so that GameManagers will use this SpawnPoint entity over the built-in component.
 public partial class GameManager

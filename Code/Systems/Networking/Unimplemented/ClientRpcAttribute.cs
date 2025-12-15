@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// A method that can be called by the server.

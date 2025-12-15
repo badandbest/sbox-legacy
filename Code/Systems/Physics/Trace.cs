@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// Wrapper for scene trace to work like it used to in the entity system.

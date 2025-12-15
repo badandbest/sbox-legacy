@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using Sandbox;
 using Sandbox.Network;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static Legacy.GameManager;
+using static Sandbox.GameManager;
 
-namespace Legacy;
+namespace Sandbox;
 
 internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene ), ISceneLoadingEvents, Component.INetworkListener
 {

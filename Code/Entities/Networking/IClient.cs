@@ -1,7 +1,6 @@
 ﻿using System;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 public interface IClient : IEntity
 {

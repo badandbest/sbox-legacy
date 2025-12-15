@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Legacy;
+﻿namespace Sandbox;
 
 /// <summary>
 /// This is the HL2 style movement. If moving from <see cref="Position"/> using <see cref="Velocity"/> results

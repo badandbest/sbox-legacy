@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace Legacy;
+﻿namespace Sandbox;
 
 public class AnimatedEntity : ModelEntity
 {

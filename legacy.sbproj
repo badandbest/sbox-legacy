@@ -15,7 +15,7 @@
   "Metadata": {
     "CsProjName": "Entity System",
     "Compiler": {
-      "RootNamespace": "Legacy",
+      "RootNamespace": "Sandbox",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
       "NoWarn": "CS1591;IDE0130",
       "WarningsAsErrors": "",

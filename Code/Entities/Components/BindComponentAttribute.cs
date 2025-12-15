@@ -1,7 +1,6 @@
 ﻿using System;
-﻿using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 [AttributeUsage( AttributeTargets.Property )]
 [CodeGenerator( CodeGeneratorFlags.WrapPropertyGet | CodeGeneratorFlags.Instance, "BindComponent" )]

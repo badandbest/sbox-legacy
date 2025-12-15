@@ -1,10 +1,9 @@
-﻿using Sandbox;
-using Sandbox.Diagnostics;
+﻿using Sandbox.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// Extensions for <see cref="Game"/> that adds members from the old entity system.

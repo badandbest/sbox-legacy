@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// This is the main base game.

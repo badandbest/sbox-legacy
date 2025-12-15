@@ -1,7 +1,6 @@
-﻿using Sandbox;
-using System;
+﻿using System;
 
-namespace Legacy;
+namespace Sandbox;
 
 public class EntityComponent : IComponent
 {

@@ -1,6 +1,4 @@
-using Sandbox;
-
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// Global accessor for the current game's camera.

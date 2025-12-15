@@ -1,4 +1,4 @@
-﻿namespace Legacy;
+﻿namespace Sandbox;
 
 /// <summary>
 /// If a component is marked with this, then only one of that type of component

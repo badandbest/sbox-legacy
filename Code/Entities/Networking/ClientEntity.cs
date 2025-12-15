@@ -1,7 +1,6 @@
 ﻿using System;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 [Library( "player" ), Category( "Clients" ), Title( "Client" ), Icon( "account_circle" )]
 internal sealed class ClientEntity( Connection connection ) : Entity, IClient

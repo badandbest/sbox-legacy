@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Buffers;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// Used to store a list of planes that an object is going to hit, and then

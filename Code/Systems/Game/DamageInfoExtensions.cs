@@ -1,9 +1,8 @@
-﻿using Sandbox;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// Extensions for <see cref="DamageInfo"/> that adds members from the old entity system.

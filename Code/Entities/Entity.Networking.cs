@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 public partial class Entity
 {

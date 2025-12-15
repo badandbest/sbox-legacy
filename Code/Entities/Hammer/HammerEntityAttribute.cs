@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// This is an entity that can be placed in Hammer.

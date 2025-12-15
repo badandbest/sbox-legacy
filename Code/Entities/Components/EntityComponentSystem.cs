@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Legacy;
+namespace Sandbox;
 
 internal class EntityComponentSystem( Entity entity ) : IComponentSystem
 {

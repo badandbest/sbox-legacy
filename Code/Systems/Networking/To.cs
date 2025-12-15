@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// A wrapper to define which clients to send network things to. This aims to make code more readable by having the target argument in generated functions be more obvious and visible.

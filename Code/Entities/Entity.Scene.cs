@@ -1,8 +1,7 @@
-﻿using Sandbox;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Legacy;
+namespace Sandbox;
 
 public partial class Entity
 {

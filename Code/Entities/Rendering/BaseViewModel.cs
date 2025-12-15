@@ -1,7 +1,6 @@
-﻿using Sandbox;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// A common base we can use for weapons so we don't have to implement the logic over and over

@@ -1,7 +1,6 @@
 using System;
-using Sandbox;
 
-namespace Legacy;
+namespace Sandbox;
 
 /// <summary>
 /// A struct to help you set up your citizen based animations
