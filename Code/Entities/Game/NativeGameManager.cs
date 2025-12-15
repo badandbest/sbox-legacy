@@ -82,9 +82,7 @@ file class LegacyMapLoader : SceneMapLoader
 		if ( HammerEntities.TryGetValue( kv.TypeName, out var type ) )
 		{
 			var entity = type.Create<Entity>();
-			entity.Rotation = kv.Rotation;
-			entity.Position = kv.Position;
-			entity.Scale = kv.Scales.x;
+			entity.Transform = kv.Transform;
 			entity.Tags.Add( kv.Tags );
 			entity.Tags.Add( "world" );
 		}
