@@ -21,14 +21,10 @@ public partial class Entity
 	/// </summary>
 	public Entity()
 	{
-		GameObject = new()
-		{
-			Name = GetType().Name,
-			Flags = GameObjectFlags.NotSaved
-		};
-		GameObject.AddComponent<EntityBinder>().Entity = this;
-
 		Components = new EntityComponentSystem( this );
+
+		GameObject = GameObject.Scoped ?? new( GetType().Name );
+		GameObject.GetOrAddComponent<EntityBinder>().Entity = this;
 	}
 
 	public bool IsValid => GameObject.IsValid();

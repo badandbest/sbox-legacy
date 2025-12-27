@@ -1,35 +1,11 @@
 ﻿using System.Linq;
 using Sandbox.Network;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using static Sandbox.GameManager;
 
 namespace Sandbox;
 
 internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene ), ISceneLoadingEvents, Component.INetworkListener
 {
-	/// <summary>
-	/// Load map.
-	/// </summary>
-	public async Task OnLoad( Scene scene, SceneLoadOptions options )
-	{
-		var map = LaunchArguments.Map;
-		map ??= "facepunch.flatgrass";
-
-		if ( Package.TryParseIdent( map, out var parsed ) )
-		{
-			var package = await Package.FetchAsync( map, false );
-			var files = await package.MountAsync();
-
-			map = package.PrimaryAsset;
-		}
-
-		var loader = new LegacyMapLoader( scene.SceneWorld, scene.PhysicsWorld );
-		_ = new Map( map, loader );
-
-		loader.AddCollision();
-	}
-
 	/// <summary>
 	/// Initialize GameManager.
 	/// </summary>
@@ -61,46 +37,5 @@ internal sealed class NativeGameManager( Scene scene ) : GameObjectSystem( scene
 
 		Current.ClientDisconnect( cl );
 		cl.Delete();
-	}
-}
-
-/// <summary>
-/// Loads entities with <see cref="HammerEntityAttribute"/>.
-/// </summary>
-file class LegacyMapLoader : SceneMapLoader
-{
-	public Dictionary<string, TypeDescription> HammerEntities { get; private set; }
-
-	public LegacyMapLoader( SceneWorld world, PhysicsWorld physics ) : base( world, physics )
-	{
-		var hammerEntities = TypeLibrary.GetTypesWithAttribute<HammerEntityAttribute>().Select( t => t.Type );
-		HammerEntities = hammerEntities.ToDictionary( t => t.GetAttribute<LibraryAttribute>().Name );
-	}
-
-	protected override void CreateObject( ObjectEntry kv )
-	{
-		if ( HammerEntities.TryGetValue( kv.TypeName, out var type ) )
-		{
-			var entity = type.Create<Entity>();
-			entity.Transform = kv.Transform;
-			entity.Tags.Add( kv.Tags );
-			entity.Tags.Add( "world" );
-		}
-		else
-		{
-			CreateModel( kv );
-		}
-	}
-
-	public void AddCollision()
-	{
-		var physics = new Entity();
-		physics.GameObject.Name = "worldphysics";
-		physics.Tags.Add( "world" );
-
-		foreach ( var body in PhysicsWorld.Bodies )
-		{
-			body.GameObject = physics;
-		}
 	}
 }
