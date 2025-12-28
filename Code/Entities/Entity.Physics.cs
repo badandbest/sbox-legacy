@@ -1,4 +1,6 @@
-﻿namespace Sandbox;
+﻿using System.Text.Json.Serialization;
+
+namespace Sandbox;
 
 public partial class Entity
 {
@@ -11,6 +13,7 @@ public partial class Entity
 	/// <summary>
 	/// Accessor to add, remove and check entity tags
 	/// </summary>
+	[Hide, JsonIgnore]
 	public GameTags Tags
 	{
 		get => GameObject.Tags;

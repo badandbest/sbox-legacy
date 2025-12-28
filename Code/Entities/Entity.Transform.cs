@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Sandbox;
 
@@ -12,7 +13,7 @@ public partial class Entity
 	/// <summary>
 	/// What this entity is parented to, if anything. Will make this entity move with it's parent, but loses collisions.
 	/// </summary>
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Entity Parent
 	{
 		get => GameObject.Parent;
@@ -26,7 +27,7 @@ public partial class Entity
 	public virtual Entity Root => Parent?.Root ?? this;
 
 	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Entity Owner { get; set; }
 
 	/// <summary>
@@ -67,21 +68,21 @@ public partial class Entity
 
 	#region World Transform
 
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Transform Transform
 	{
 		get => GameObject.WorldTransform;
 		set => GameObject.WorldTransform = value;
 	}
 
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Vector3 Position
 	{
 		get => GameObject.WorldPosition;
 		set => GameObject.WorldPosition = value;
 	}
 
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Rotation Rotation
 	{
 		get => GameObject.WorldRotation;
@@ -91,7 +92,7 @@ public partial class Entity
 	/// <summary>
 	/// The scale of the entity. 1 is normal.
 	/// </summary>
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual float Scale
 	{
 		get => GameObject.WorldScale.x;
@@ -105,7 +106,7 @@ public partial class Entity
 	/// <summary>
 	/// The entity's position relative to its parent (or the world if no parent)
 	/// </summary>
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Vector3 LocalPosition
 	{
 		get => GameObject.LocalPosition;
@@ -115,7 +116,7 @@ public partial class Entity
 	/// <summary>
 	/// The entity's local rotation.
 	/// </summary>
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual Rotation LocalRotation
 	{
 		get => GameObject.LocalRotation;
@@ -125,7 +126,7 @@ public partial class Entity
 	/// <summary>
 	/// The entity's scale relative to its parent's scale. 1 is normal.
 	/// </summary>
-	[Hide]
+	[Hide, JsonIgnore]
 	public virtual float LocalScale
 	{
 		get => GameObject.LocalScale.x;

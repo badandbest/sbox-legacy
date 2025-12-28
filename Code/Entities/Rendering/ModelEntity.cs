@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Sandbox;
 
@@ -31,6 +32,7 @@ public class ModelEntity : Entity
 	/// Access to this entity's model.
 	/// </summary>
 	// [Prefab]
+	[JsonIgnore]
 	public Model Model
 	{
 		get => Renderer.Model;
@@ -44,7 +46,7 @@ public class ModelEntity : Entity
 	/// <summary>
 	/// The collision bounds.
 	/// </summary>
-	[Hide]
+	[Hide, JsonIgnore]
 	public BBox CollisionBounds
 	{
 		get => Model.Bounds;

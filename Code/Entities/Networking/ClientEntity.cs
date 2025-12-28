@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Sandbox;
 
 [Library( "player" ), Category( "Clients" ), Title( "Client" ), Icon( "account_circle" )]
-internal sealed class ClientEntity( Connection connection ) : Entity, IClient
+internal sealed class ClientEntity : Entity, IClient, IEquatable<Connection>
 {
+	private Connection connection => GameObject.Network.Owner ?? Connection.Local;
+
 	public IEntity Pawn { get; set; }
 
 	public long SteamId => connection.SteamId;
@@ -32,6 +35,18 @@ internal sealed class ClientEntity( Connection connection ) : Entity, IClient
 	public T GetValue<T>( string key, T defaultValue = default ) => throw new NotImplementedException();
 
 	#endregion
+
+	public override void Spawn()
+	{
+		GameManager.Current.ClientJoined( this );
+	}
+
+	protected internal override void OnDestroy()
+	{
+		GameManager.Current.ClientDisconnect( this );
+	}
+
+	public bool Equals( Connection other ) => connection == other;
 
 	public override string ToString() => $"{SteamId}/{Name}";
 }

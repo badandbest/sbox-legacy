@@ -23,8 +23,19 @@ public partial class Entity
 	{
 		Components = new EntityComponentSystem( this );
 
-		GameObject = GameObject.Scoped ?? new( GetType().Name );
-		GameObject.GetOrAddComponent<EntityBinder>().Entity = this;
+		if ( GameObject.Scoped is GameObject gameObject )
+		{
+			GameObject = gameObject;
+			GameObject.GetOrAddComponent<EntityBinder>().Entity = this;
+
+			return;
+		}
+
+		GameObject = new( GetType().Name );
+		GameObject.AddComponent<EntityBinder>().Entity = this;
+
+		GameObject.NetworkSpawn();
+
 	}
 
 	public bool IsValid => GameObject.IsValid();
@@ -40,11 +51,33 @@ public partial class Entity
 }
 
 [Title( "Entity" ), Tint( EditorTint.White )]
-file sealed class EntityBinder : Component
+file sealed class EntityBinder : Component, Component.INetworkSnapshot
 {
 	[Property, InlineEditor]
 	public Entity Entity { get; set; }
 
-	protected override void OnStart() => Entity.Spawn();
-	protected override void OnDestroy() => Entity.OnDestroy();
+	public void ReadSnapshot( ref ByteStream reader )
+	{
+		using ( GameObject.Push() )
+		{
+			Entity = TypeLibrary.FromBytes<Entity>( ref reader );
+		}
+	}
+
+	public void WriteSnapshot( ref ByteStream writer )
+	{
+		TypeLibrary.ToBytes( Entity, ref writer );
+	}
+
+	protected override void OnStart()
+	{
+		if ( IsProxy ) return;
+		Entity.Spawn();
+	}
+
+	protected override void OnDestroy()
+	{
+		if ( IsProxy ) return;
+		Entity.OnDestroy();
+	}
 }

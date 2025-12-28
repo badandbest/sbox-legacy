@@ -1,5 +1,3 @@
-﻿using System.Linq;
-
 namespace Sandbox;
 
 /// <summary>
@@ -8,10 +6,15 @@ namespace Sandbox;
 [Category( "Setup" ), Title( "Game" ), Icon( "sports_esports" )]
 public abstract partial class GameManager : Entity
 {
+	public GameManager()
+	{
+		Current = this;
+	}
+
 	/// <summary>
 	/// Currently active game entity.
 	/// </summary>
-	public static GameManager Current => All.OfType<GameManager>().Single();
+	public static GameManager Current { get; set; }
 
 	/// <summary>
 	/// Client has joined the server. Create their puppets.

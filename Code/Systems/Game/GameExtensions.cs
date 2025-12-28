@@ -20,7 +20,7 @@ public static partial class GameExtensions
 		/// <summary>
 		/// The local client. This is you if you're connecting to the server.
 		/// </summary>
-		public static IClient LocalClient => Game.Clients.Single( cl => cl.SteamId == Connection.Local.SteamId );
+		public static IClient LocalClient => Entity.All.OfType<ClientEntity>().Single( cl => cl.Equals( Connection.Local ) );
 
 		/// <summary>
 		/// The local client's pawn. This is probably a player, or a vehicle, or a melon.
