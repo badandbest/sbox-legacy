@@ -31,11 +31,4 @@ public partial class Entity : IEntity
 	/// Called when the entity was destroyed. This is not the same as the class destructor.
 	/// </summary>
 	protected internal virtual void OnDestroy() { }
-
-	#region Unimplemented
-
-	public BBox WorldSpaceBounds { get; }
-	public Vector3 Velocity { get; set; }
-
-	#endregion
 }
