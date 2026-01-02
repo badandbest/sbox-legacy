@@ -14,20 +14,20 @@ public partial class Entity
 	/// The game object this entity is bindined to.
 	/// </summary>
 	[Hide]
-	internal GameObject GameObject { get; }
+	internal readonly GameObject GameObject = GameObject.Scoped;
+
+	/// <summary>
+	/// Components of this entity.
+	/// </summary>
+	public ComponentList Components => GameObject.Components;
 
 	/// <summary>
 	/// Create the entity.
 	/// </summary>
 	public Entity()
 	{
-		Components = new EntityComponentSystem( this );
-
-		if ( GameObject.Scoped is GameObject gameObject )
+		if ( GameObject is null )
 		{
-			GameObject = gameObject;
-			GameObject.GetOrAddComponent<EntityBinder>().Entity = this;
-
 			return;
 		}
 
@@ -35,7 +35,6 @@ public partial class Entity
 		GameObject.AddComponent<EntityBinder>().Entity = this;
 
 		GameObject.NetworkSpawn();
-
 	}
 
 	public bool IsValid => GameObject.IsValid();
@@ -50,8 +49,11 @@ public partial class Entity
 	public static implicit operator Entity( GameObject gameObject ) => gameObject?.GetComponent<EntityBinder>()?.Entity;
 }
 
+/// <summary>
+/// A component that forwards actions to an entity.
+/// </summary>
 [Title( "Entity" ), Tint( EditorTint.White )]
-file sealed class EntityBinder : Component, Component.INetworkSnapshot
+internal sealed class EntityBinder : Component, Component.INetworkSnapshot
 {
 	[Property, InlineEditor]
 	public Entity Entity { get; set; }

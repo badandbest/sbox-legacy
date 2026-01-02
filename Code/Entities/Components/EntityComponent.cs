@@ -2,24 +2,17 @@
 
 namespace Sandbox;
 
-public class EntityComponent : IComponent
+public abstract class EntityComponent : Component
 {
-	/// <inheritdoc cref="IComponent.Enabled"/>
-	public bool Enabled { get; set; }
-
-	/// <inheritdoc cref="IComponent.IsClientOnly"/>
-	public bool IsClientOnly => throw new NotImplementedException();
-
-	/// <inheritdoc cref="IComponent.IsServerOnly"/>
-	public bool IsServerOnly => throw new NotImplementedException();
-
-	/// <inheritdoc cref="IComponent.Name"/>
-	public string Name { get; set; }
-
 	/// <summary>
 	/// The entity this component is attached to.
 	/// </summary>
-	public Entity Entity { get; internal set; }
+	public Entity Entity => GetComponent<EntityBinder>().Entity;
+
+	/// <summary>
+	/// Return false if can't be added to this entity for some reason.
+	/// </summary>
+	public virtual bool CanAddToEntity( Entity entity ) => throw new NotImplementedException();
 
 	/// <summary>
 	/// Called when this component is enabled (or added to the entity).
@@ -32,31 +25,21 @@ public class EntityComponent : IComponent
 	protected virtual void OnDeactivate() { }
 
 	/// <summary>
-	/// Return false if can't be added to this entity for some reason.
-	/// </summary>
-	public virtual bool CanAddToEntity( Entity entity ) => true;
-
-	/// <summary>
 	/// Remove this component from the parent entity. Entity will become null immediately,
 	/// so don't try to access it after calling this!
 	/// </summary>
-	public void Remove() => Entity?.Components.Remove( this );
+	public void Remove() => Destroy();
 
-	/// <inheritdoc cref="object.ToString"/>
-	public override string ToString() => Name ?? $"{DisplayInfo.For( this ).Name} {GetHashCode()}";
+	protected sealed override void OnEnabled() => OnActivate();
+	protected sealed override void OnDisabled() => OnDeactivate();
 }
 
 /// <summary>
 /// Component that can be only added to given entity type.
 /// </summary>
 /// <typeparam name="T">Entity type this component can be added to.</typeparam>
-public class EntityComponent<T> : EntityComponent where T : Entity
+public abstract class EntityComponent<T> : EntityComponent where T : Entity
 {
 	/// <inheritdoc cref="P:Sandbox.EntityComponent.Entity" />
 	public new T Entity => base.Entity as T;
-
-	/// <summary>
-	/// Return false if target entity is not of type T.
-	/// </summary>
-	public override bool CanAddToEntity( Entity entity ) => entity is T;
 }
