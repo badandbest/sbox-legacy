@@ -2,7 +2,7 @@
 
 public class AnimatedEntity : ModelEntity
 {
-	internal override SkinnedModelRenderer Renderer => GameObject.GetOrAddComponent<SkinnedModelRenderer>();
+	internal override SkinnedModelRenderer Renderer => Components.GetOrCreate<SkinnedModelRenderer>();
 
 	/// <summary>
 	/// Retrieve parameter value of currently active Animation Graph.

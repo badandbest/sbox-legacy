@@ -137,8 +137,8 @@ public struct Trace( SceneTrace trace )
 		if ( ent is not Entity entity ) return this;
 
 		return new( hierarchy
-			? trace.IgnoreGameObjectHierarchy( entity.GameObject )
-			: trace.IgnoreGameObject( entity.GameObject ) );
+			? trace.IgnoreGameObjectHierarchy( entity )
+			: trace.IgnoreGameObject( entity ) );
 	}
 
 	/// <summary>

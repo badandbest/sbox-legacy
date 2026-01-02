@@ -5,7 +5,7 @@
 /// </summary>
 public static class TagExtensions
 {
-	extension( GameTags source )
+	extension( ITagSet source )
 	{
 		/// <summary>
 		/// 
@@ -15,7 +15,11 @@ public static class TagExtensions
 		internal void SetFrom( string tags )
 		{
 			source.RemoveAll();
-			source.Add( tags.SplitQuotesStrings() );
+
+			foreach ( var tag in tags.SplitQuotesStrings() )
+			{
+				source.Add( tag );
+			}
 		}
 	}
 }

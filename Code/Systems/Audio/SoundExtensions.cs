@@ -26,7 +26,9 @@ public static class SoundExtensions
 		{
 			var sound = ResourceLibrary.Get<SoundEvent>( name );
 
-			return entity.GameObject.PlaySound( sound );
+			GameObject go = entity;
+
+			return go.PlaySound( sound );
 		}
 
 		/// <summary>
@@ -36,7 +38,7 @@ public static class SoundExtensions
 		public static SoundHandle FromEntity( string name, Entity entity, string attachment )
 		{
 			var sound = ResourceLibrary.Get<SoundEvent>( name );
-			var renderer = entity.GameObject.GetComponent<ModelRenderer>();
+			var renderer = entity.Components.Get<ModelRenderer>();
 
 			return renderer?.GetAttachmentObject( attachment ).PlaySound( sound );
 		}

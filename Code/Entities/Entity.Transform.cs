@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Sandbox;
@@ -16,7 +17,7 @@ public partial class Entity
 	[Hide, JsonIgnore]
 	public virtual Entity Parent
 	{
-		get => GameObject.Parent;
+		get => Components.Get<Handle>( FindMode.InParent );
 		set => GameObject.Parent = value;
 	}
 
@@ -24,7 +25,7 @@ public partial class Entity
 	/// Gets the top most parent entity. If we don't have a parent, it might be us.
 	/// </summary>
 	[Hide]
-	public virtual Entity Root => Parent?.Root ?? this;
+	public virtual Entity Root => Components.GetAll<Handle>( FindMode.EverythingInAncestors ).Last();
 
 	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
 	[Hide, JsonIgnore]
@@ -34,7 +35,7 @@ public partial class Entity
 	/// All entities that are parented to this entity.
 	/// </summary>
 	[Hide]
-	public List<Entity> Children => [.. GameObject.Children];
+	public List<Entity> Children => [.. Components.GetAll<Handle>( FindMode.EverythingInChildren )];
 
 	/// <summary>
 	/// Become a child of this entity.

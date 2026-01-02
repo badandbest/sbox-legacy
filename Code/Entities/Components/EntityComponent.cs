@@ -2,12 +2,13 @@
 
 namespace Sandbox;
 
+[Library, Icon( "extension" ), Tint( EditorTint.White )]
 public abstract class EntityComponent : Component
 {
 	/// <summary>
 	/// The entity this component is attached to.
 	/// </summary>
-	public Entity Entity => GetComponent<EntityBinder>().Entity;
+	public Entity Entity => GameObject;
 
 	/// <summary>
 	/// Return false if can't be added to this entity for some reason.

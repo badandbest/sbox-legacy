@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Text.Json.Serialization;
 
 namespace Sandbox;
 
 [Library( "player" ), Category( "Clients" ), Title( "Client" ), Icon( "account_circle" )]
 internal sealed class ClientEntity : Entity, IClient, IEquatable<Connection>
 {
-	private Connection connection => GameObject.Network.Owner ?? Connection.Local;
+	private Connection connection => ((GameObject)this).Network.Owner ?? Connection.Local;
 
 	public IEntity Pawn { get; set; }
 

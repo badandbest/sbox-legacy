@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Sandbox;
 
@@ -8,18 +7,18 @@ public partial class Entity
 	/// <summary>
 	/// A list of all active entities.
 	/// </summary>
-	public static IReadOnlyList<Entity> All => [.. Game.ActiveScene.GetAll<EntityBinder>().Select( b => b.Entity )];
+	public static IReadOnlyList<Entity> All => [.. Game.ActiveScene.GetAll<Handle>()];
 
 	/// <summary>
 	/// The game object this entity is bindined to.
 	/// </summary>
-	[Hide]
-	internal readonly GameObject GameObject = GameObject.Scoped;
+	private readonly GameObject GameObject = GameObject.Scoped;
+	public bool IsValid => GameObject.IsValid;
 
 	/// <summary>
 	/// Components of this entity.
 	/// </summary>
-	public ComponentList Components => GameObject.Components;
+	public ComponentList Components => GameObject?.Components;
 
 	/// <summary>
 	/// Create the entity.
@@ -28,16 +27,12 @@ public partial class Entity
 	{
 		if ( GameObject is null )
 		{
-			return;
+			GameObject = new( GetType().Name );
+			GameObject.NetworkSpawn();
 		}
 
-		GameObject = new( GetType().Name );
-		GameObject.AddComponent<EntityBinder>().Entity = this;
-
-		GameObject.NetworkSpawn();
+		Components.GetOrCreate<Handle>().Entity = this;
 	}
-
-	public bool IsValid => GameObject.IsValid();
 
 	/// <summary>
 	/// Delete this entity. You shouldn't access it anymore.
@@ -46,40 +41,45 @@ public partial class Entity
 
 	public static implicit operator GameObject( Entity entity ) => entity.GameObject;
 
-	public static implicit operator Entity( GameObject gameObject ) => gameObject?.GetComponent<EntityBinder>()?.Entity;
-}
+	public static implicit operator Entity( GameObject go ) => go?.GetComponent<Handle>();
 
-/// <summary>
-/// A component that forwards actions to an entity.
-/// </summary>
-[Title( "Entity" ), Tint( EditorTint.White )]
-internal sealed class EntityBinder : Component, Component.INetworkSnapshot
-{
-	[Property, InlineEditor]
-	public Entity Entity { get; set; }
-
-	public void ReadSnapshot( ref ByteStream reader )
+	/// <summary>
+	/// A component that forwards actions to an entity.
+	/// </summary>
+	[Title( "Entity Handle" ), Icon( "people" ), Tint( EditorTint.White )]
+	private sealed class Handle : Component, Component.INetworkSnapshot
 	{
-		using ( GameObject.Push() )
+		public Entity Entity { get; set; }
+
+		public void ReadSnapshot( ref ByteStream reader )
 		{
-			Entity = TypeLibrary.FromBytes<Entity>( ref reader );
+			using ( GameObject.Push() )
+			{
+				Entity = TypeLibrary.FromBytes<Entity>( ref reader );
+			}
 		}
-	}
 
-	public void WriteSnapshot( ref ByteStream writer )
-	{
-		TypeLibrary.ToBytes( Entity, ref writer );
-	}
+		public void WriteSnapshot( ref ByteStream writer )
+		{
+			TypeLibrary.ToBytes( Entity, ref writer );
+		}
 
-	protected override void OnStart()
-	{
-		if ( IsProxy ) return;
-		Entity.Spawn();
-	}
+		public static implicit operator Entity( Handle handle ) => handle?.Entity;
 
-	protected override void OnDestroy()
-	{
-		if ( IsProxy ) return;
-		Entity.OnDestroy();
+		#region Forwarded actions
+
+		protected override void OnStart()
+		{
+			if ( IsProxy ) return;
+			Entity.Spawn();
+		}
+
+		protected override void OnDestroy()
+		{
+			if ( IsProxy ) return;
+			Entity.OnDestroy();
+		}
+
+		#endregion
 	}
 }

@@ -5,7 +5,7 @@ namespace Sandbox;
 
 public class ModelEntity : Entity
 {
-	internal virtual ModelRenderer Renderer => GameObject.GetOrAddComponent<ModelRenderer>();
+	internal virtual ModelRenderer Renderer => Components.GetOrCreate<ModelRenderer>();
 
 	/// <summary>
 	/// The <see cref="P:Sandbox.ModelEntity.SceneObject" /> that represents this entity.

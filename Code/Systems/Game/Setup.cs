@@ -6,11 +6,7 @@ public sealed class Setup( Scene scene ) : GameObjectSystem( scene ), ISceneStar
 {
 	public void OnHostInitialize()
 	{
-		var manager = TypeLibrary.GetTypes<GameManager>()
-			.Single( t => !t.IsAbstract )
-			.Create<GameManager>();
-
-		manager.GameObject.NetworkSpawn( null );
+		TypeLibrary.GetTypes<GameManager>().Single( t => !t.IsAbstract ).Create<GameManager>();
 	}
 
 	public void OnClientInitialize()

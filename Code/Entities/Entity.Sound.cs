@@ -1,4 +1,6 @@
-﻿namespace Sandbox;
+﻿using System.Xml.Linq;
+
+namespace Sandbox;
 
 public partial class Entity
 {

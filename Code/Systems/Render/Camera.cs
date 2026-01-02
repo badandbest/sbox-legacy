@@ -48,9 +48,9 @@ public static class Camera
 				return;
 			}
 
-			if ( field is ModelEntity { GameObject: var oldViewer } )
+			if ( field is ModelEntity { Components: ComponentList oldViewer } )
 			{
-				foreach ( var renderer in oldViewer.GetComponentsInChildren<ModelRenderer>() )
+				foreach ( var renderer in oldViewer.GetAll<ModelRenderer>() )
 				{
 					renderer.RenderType = ModelRenderer.ShadowRenderType.On;
 				}
@@ -58,9 +58,9 @@ public static class Camera
 
 			field = value;
 
-			if ( field is ModelEntity { GameObject: var newViewer } )
+			if ( field is ModelEntity { Components: ComponentList newViewer } )
 			{
-				foreach ( var renderer in newViewer.GetComponentsInChildren<ModelRenderer>() )
+				foreach ( var renderer in newViewer.GetAll<ModelRenderer>() )
 				{
 					renderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
 				}

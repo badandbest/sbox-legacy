@@ -9,7 +9,7 @@ public partial class Entity : IJsonConvert
 	{
 		if ( reader.TryGetGuid( out var id ) )
 		{
-			return (Entity)Game.ActiveScene.Directory.FindByGuid( id );
+			return Game.ActiveScene.Directory.FindByGuid( id );
 		}
 
 		return null;
