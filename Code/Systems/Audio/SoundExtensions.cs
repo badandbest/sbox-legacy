@@ -10,7 +10,6 @@ public static class SoundExtensions
 		/// <summary>
 		/// Create a sound originating from world position.
 		/// </summary>
-		[ClientRpc]
 		public static SoundHandle FromWorld( string name, Vector3 position )
 		{
 			var sound = ResourceLibrary.Get<SoundEvent>( name );
@@ -21,7 +20,6 @@ public static class SoundExtensions
 		/// <summary>
 		/// Create a sound originating from an entity.
 		/// </summary>
-		[ClientRpc]
 		public static SoundHandle FromEntity( string name, Entity entity )
 		{
 			var sound = ResourceLibrary.Get<SoundEvent>( name );
@@ -32,7 +30,6 @@ public static class SoundExtensions
 		/// <summary>
 		/// Create a sound originating from an entity attachment.
 		/// </summary>
-		[ClientRpc]
 		public static SoundHandle FromEntity( string name, Entity entity, string attachment )
 		{
 			var sound = ResourceLibrary.Get<SoundEvent>( name );
@@ -44,7 +41,6 @@ public static class SoundExtensions
 		/// <summary>
 		/// Create a sound originating from an screen coordinates.
 		/// </summary>
-		[ClientRpc]
 		public static SoundHandle FromScreen( string name, float x = 0.5f, float y = 0.5f )
 		{
 			var sound = ResourceLibrary.Get<SoundEvent>( name );
