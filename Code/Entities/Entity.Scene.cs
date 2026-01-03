@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Sandbox;
 
@@ -28,7 +29,9 @@ public partial class Entity
 		if ( GameObject is null )
 		{
 			GameObject = new( GetType().Name );
+			Components.Create<Handle>().Entity = this;
 			GameObject.NetworkSpawn();
+			return;
 		}
 
 		Components.GetOrCreate<Handle>().Entity = this;
@@ -39,8 +42,8 @@ public partial class Entity
 	/// </summary>
 	public void Delete() => GameObject.Destroy();
 
+	// Entities should be interchangeable with game objects.
 	public static implicit operator GameObject( Entity entity ) => entity.GameObject;
-
 	public static implicit operator Entity( GameObject go ) => go?.GetComponent<Handle>();
 
 	/// <summary>
@@ -49,6 +52,7 @@ public partial class Entity
 	[Title( "Entity Handle" ), Icon( "people" ), Tint( EditorTint.White )]
 	private sealed class Handle : Component, Component.INetworkSnapshot
 	{
+		[Property, InlineEditor, JsonIgnore]
 		public Entity Entity { get; set; }
 
 		public void ReadSnapshot( ref ByteStream reader )
@@ -65,6 +69,7 @@ public partial class Entity
 		}
 
 		public static implicit operator Entity( Handle handle ) => handle?.Entity;
+		public static implicit operator Handle( Entity entity ) => entity.Components.Get<Handle>();
 
 		#region Forwarded actions
 

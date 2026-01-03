@@ -17,13 +17,13 @@ public partial class Entity
 	/// <summary>
 	/// Entity's health.
 	/// </summary>
-	[Category( "Life" )]
+	[Category( "Life" ), Net]
 	public float Health { get; set; }
 
 	/// <summary>
 	/// Entity's life state. Can be used to determine if certain events such as <see cref="OnKilled" /> need firing.
 	/// </summary>
-	[Category( "Life" )]
+	[Category( "Life" ), Net]
 	public LifeState LifeState { get; set; }
 
 	/// <summary>
