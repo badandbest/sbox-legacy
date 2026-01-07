@@ -52,7 +52,7 @@ public partial class Entity
 	[Title( "Entity Handle" ), Icon( "people" ), Tint( EditorTint.White )]
 	private sealed class Handle : Component, Component.INetworkSnapshot
 	{
-		[Property, InlineEditor, JsonIgnore]
+		[Property, JsonIgnore]
 		public Entity Entity { get; set; }
 
 		public void ReadSnapshot( ref ByteStream reader )
