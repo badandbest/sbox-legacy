@@ -30,7 +30,7 @@ public struct To : IEnumerable<IClient>
 	/// <summary>
 	/// The same as <c>To.Multiple( Client.All )</c>.
 	/// </summary>
-	public static To Everyone => Multiple( [] );
+	public static To Everyone => Multiple( Game.Clients );
 
 	/// <summary>
 	/// Is this client a target recipient?

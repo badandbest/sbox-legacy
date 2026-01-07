@@ -46,6 +46,7 @@ internal sealed class ClientEntity : Entity, IClient, IEquatable<Connection>
 	}
 
 	public bool Equals( Connection other ) => connection == other;
+	public static implicit operator Connection( ClientEntity client ) => client.connection;
 
 	public override string ToString() => $"{SteamId}/{Name}";
 }
