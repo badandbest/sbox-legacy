@@ -26,15 +26,23 @@ public partial class Entity
 	/// </summary>
 	public Entity()
 	{
-		if ( GameObject is null )
+		if ( GameObject is not null )
 		{
-			GameObject = new( GetType().Name );
-			Components.Create<Handle>().Entity = this;
-			GameObject.NetworkSpawn();
+			Components.GetOrCreate<Handle>().Entity = this;
 			return;
 		}
 
-		Components.GetOrCreate<Handle>().Entity = this;
+		GameObject = new( GetType().Name );
+		Components.Create<Handle>().Entity = this;
+
+		if ( Game.IsServer )
+		{
+			GameObject.NetworkSpawn();
+		}
+		else
+		{
+			GameObject.NetworkMode = NetworkMode.Never;
+		}
 	}
 
 	/// <summary>
