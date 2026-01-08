@@ -20,7 +20,8 @@ public partial class Entity : Component, IEntity
 	public Entity()
 	{
 		//
-		// For entities, GameObjects need to be set immediately.
+		// For entities, GameObjects need to be set immediately
+		// to have access to transform, etc, during the constructor.
 		//
 
 		if ( GameObject.Deserializing is GameObject parent )
@@ -31,6 +32,15 @@ public partial class Entity : Component, IEntity
 
 		var go = new GameObject( GetType().Name );
 		go.AddComponent( this );
+
+		if ( Game.IsServer )
+		{
+			go.NetworkSpawn();
+		}
+		else
+		{
+			go.NetworkMode = NetworkMode.Never;
+		}
 	}
 
 	/// <summary>

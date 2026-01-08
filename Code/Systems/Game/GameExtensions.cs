@@ -1,4 +1,6 @@
 ﻿using Sandbox.Diagnostics;
+using Sandbox.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,6 +12,8 @@ namespace Sandbox;
 /// </summary>
 public static partial class GameExtensions
 {
+	private static bool IsServer = true;
+
 	extension( Game )
 	{
 		/// <summary>
@@ -30,7 +34,7 @@ public static partial class GameExtensions
 		/// <summary>
 		/// Returns true only when current code is running on the server.
 		/// </summary>
-		public static bool IsServer => Networking.IsHost;
+		public static bool IsServer => IsServer;
 
 		/// <summary>
 		/// Returns true only when current code is running on the client.
@@ -41,6 +45,17 @@ public static partial class GameExtensions
 		/// Holds information about the current user's preferences.
 		/// </summary>
 		public static Preferences Preferences => new();
+
+		/// <summary>
+		/// Don't NetworkSpawn entities during this scope.
+		/// </summary>
+		internal static IDisposable ClientScope()
+		{
+			var old = IsServer;
+			IsServer = false;
+
+			return DisposeAction.Create( () => IsServer = old );
+		}
 
 		/// <summary>
 		/// Throws an exception when called from server or menu.

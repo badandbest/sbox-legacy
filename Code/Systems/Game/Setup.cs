@@ -25,9 +25,12 @@ internal sealed class Setup : MapInstance, ISceneStartup
 			return;
 		}
 
-		go.Flags |= GameObjectFlags.Deserializing;
-		go.Components.Create( type );
-		go.Flags &= ~GameObjectFlags.Deserializing;
+		using ( Game.ClientScope() )
+		{
+			go.Flags |= GameObjectFlags.Deserializing;
+			go.Components.Create( type );
+			go.Flags &= ~GameObjectFlags.Deserializing;
+		}
 	}
 
 	public void OnHostInitialize()
@@ -37,7 +40,6 @@ internal sealed class Setup : MapInstance, ISceneStartup
 
 	public void OnClientInitialize()
 	{
-		var cl = new ClientEntity();
-		cl.GameObject.NetworkSpawn();
+		_ = new ClientEntity();
 	}
 }

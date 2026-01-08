@@ -21,6 +21,7 @@ internal sealed class ClientEntity() : Entity, IClient
 
 	public override void Spawn()
 	{
+		if ( IsProxy ) return;
 		GameManager.Current.ClientJoined( this );
 	}
 
