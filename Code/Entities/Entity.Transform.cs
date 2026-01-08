@@ -28,8 +28,8 @@ public partial class Entity
 	public virtual Entity Root => Components.GetAll<Handle>( FindMode.EverythingInAncestors ).Last();
 
 	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
-	[Hide, JsonIgnore]
-	public virtual Entity Owner { get; set; }
+	[Net]
+	public Entity Owner { get; set; }
 
 	/// <summary>
 	/// All entities that are parented to this entity.

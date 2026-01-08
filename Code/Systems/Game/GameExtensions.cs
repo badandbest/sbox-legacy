@@ -19,12 +19,12 @@ public static partial class GameExtensions
 		/// <summary>
 		/// Returns a list of all clients on the server.
 		/// </summary>
-		public static IEnumerable<IClient> Clients => Entity.All.OfType<ClientEntity>();
+		public static IEnumerable<IClient> Clients => Entity.All.OfType<IClient>();
 
 		/// <summary>
 		/// The local client. This is you if you're connecting to the server.
 		/// </summary>
-		public static IClient LocalClient => Entity.All.OfType<ClientEntity>().Single( cl => cl.Equals( Connection.Local ) );
+		public static IClient LocalClient => Game.Clients.Single( cl => cl.IsOwnedByLocalClient );
 
 		/// <summary>
 		/// The local client's pawn. This is probably a player, or a vehicle, or a melon.

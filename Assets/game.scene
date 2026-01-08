@@ -3,7 +3,7 @@
   "GameObjects": [
     {
       "__guid": "d7c8ced9-c8b4-40f2-9afe-272ed328a12b",
-      "__version": 1,
+      "__version": 2,
       "Flags": 0,
       "Name": "Main Camera",
       "Position": "0,0,0",
@@ -12,7 +12,7 @@
       "Tags": "maincamera",
       "Enabled": true,
       "NetworkMode": 2,
-      "NetworkInterpolation": true,
+      "NetworkFlags": 0,
       "NetworkOrphaned": 0,
       "NetworkTransmit": true,
       "OwnerTransfer": 1,
@@ -51,7 +51,7 @@
     },
     {
       "__guid": "f9f028fd-2db1-4945-a60f-8bc6ba9ba940",
-      "__version": 1,
+      "__version": 2,
       "Flags": 0,
       "Name": "Map",
       "Position": "0,0,0",
@@ -60,7 +60,7 @@
       "Tags": "",
       "Enabled": true,
       "NetworkMode": 2,
-      "NetworkInterpolation": true,
+      "NetworkFlags": 0,
       "NetworkOrphaned": 0,
       "NetworkTransmit": true,
       "OwnerTransfer": 1,

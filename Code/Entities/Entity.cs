@@ -3,7 +3,7 @@
 /// <summary>
 /// A base entity all other entities derive from.
 /// </summary>
-[Library( "entity" )]
+[Library( "entity" ), Icon( "people" )]
 public partial class Entity : IEntity
 {
 	/// <summary>
@@ -31,4 +31,14 @@ public partial class Entity : IEntity
 	/// Called when the entity was destroyed. This is not the same as the class destructor.
 	/// </summary>
 	protected internal virtual void OnDestroy() { }
+
+	/// <summary>
+	/// A component has been added to the entity.
+	/// </summary>
+	protected internal virtual void OnComponentAdded( EntityComponent component ) { }
+
+	/// <summary>
+	/// A component has been removed from the entity.
+	/// </summary>
+	protected internal virtual void OnComponentRemoved( EntityComponent component ) { }
 }

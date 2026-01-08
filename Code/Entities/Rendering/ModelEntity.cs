@@ -32,7 +32,7 @@ public class ModelEntity : Entity
 	/// Access to this entity's model.
 	/// </summary>
 	// [Prefab]
-	[JsonIgnore]
+	[Net]
 	public Model Model
 	{
 		get => Renderer.Model;

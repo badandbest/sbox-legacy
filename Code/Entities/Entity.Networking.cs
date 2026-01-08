@@ -1,14 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection.Metadata;
 
 namespace Sandbox;
 
 public partial class Entity
 {
 	int IEntity.Id => NetworkIdent;
-	bool IEntity.IsOwnedByLocalClient => Client == Game.LocalClient;
+	bool IEntity.IsOwnedByLocalClient => GameObject.Network.IsOwner;
 
 	/// <summary>
 	/// The client that owns this entity. Usually as a result of being the client's Pawn.
@@ -24,7 +23,7 @@ public partial class Entity
 	/// or we're a clientside entity, or we're a serverside entity being predicted on the client.
 	/// </summary>
 	[Hide]
-	public bool IsAuthority => Game.IsServer || IsClientOnly;
+	public bool IsAuthority => !GameObject.IsProxy;
 
 	[Hide] public bool IsClientOnly => true;
 

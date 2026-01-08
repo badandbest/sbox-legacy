@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Sandbox;
 
 [Library, Icon( "extension" ), Tint( EditorTint.White )]
@@ -13,7 +11,7 @@ public abstract class EntityComponent : Component
 	/// <summary>
 	/// Return false if can't be added to this entity for some reason.
 	/// </summary>
-	public virtual bool CanAddToEntity( Entity entity ) => throw new NotImplementedException();
+	public virtual bool CanAddToEntity( Entity entity ) => true;
 
 	/// <summary>
 	/// Called when this component is enabled (or added to the entity).
@@ -31,8 +29,51 @@ public abstract class EntityComponent : Component
 	/// </summary>
 	public void Remove() => Destroy();
 
-	protected sealed override void OnEnabled() => OnActivate();
-	protected sealed override void OnDisabled() => OnDeactivate();
+	#region Forwarded actions
+
+	protected override void OnValidate()
+	{
+		if ( CanAddToEntity( Entity ) )
+		{
+			return;
+		}
+
+		Log.Error( $"CanAddToEntity: Component {this} cannot be added to {Entity}" );
+
+		Destroy();
+	}
+
+	protected override void OnStart()
+	{
+		if ( IsProxy ) return;
+
+		Entity.OnComponentAdded( this );
+		Network.Refresh( this );
+	}
+
+	protected override void OnDestroy()
+	{
+		if ( IsProxy ) return;
+
+		Entity?.OnComponentRemoved( this );
+		Network.Refresh( this );
+	}
+
+	protected sealed override void OnEnabled()
+	{
+		if ( IsProxy ) return;
+
+		OnActivate();
+	}
+
+	protected sealed override void OnDisabled()
+	{
+		if ( IsProxy ) return;
+
+		OnDeactivate();
+	}
+
+	#endregion
 }
 
 /// <summary>
@@ -41,6 +82,11 @@ public abstract class EntityComponent : Component
 /// <typeparam name="T">Entity type this component can be added to.</typeparam>
 public abstract class EntityComponent<T> : EntityComponent where T : Entity
 {
-	/// <inheritdoc cref="P:Sandbox.EntityComponent.Entity" />
+	/// <inheritdoc cref="EntityComponent.Entity" />
 	public new T Entity => base.Entity as T;
+
+	/// <summary>
+	/// Return false if target entity is not of type T.
+	/// </summary>
+	public override bool CanAddToEntity( Entity entity ) => entity is T or null;
 }

@@ -5,13 +5,13 @@ public partial class Entity
 	/// <summary>
 	/// The entity which attacked this one last. Server only.
 	/// </summary>
-	[Hide]
+	[Hide, Net]
 	public Entity LastAttacker { get; set; }
 
 	/// <summary>
 	/// The weapon <see cref="LastAttacker" /> was carrying, if any. Server only.
 	/// </summary>
-	[Hide]
+	[Hide, Net]
 	public Entity LastAttackerWeapon { get; set; }
 
 	/// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sandbox.Utility;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Sandbox;
@@ -35,12 +36,13 @@ public partial class Entity
 		GameObject = new( GetType().Name );
 		Components.Create<Handle>().Entity = this;
 
-		if ( Game.IsServer )
+		if ( Game.IsServer && !GameObject.Network.Active )
 		{
 			GameObject.NetworkSpawn();
 		}
 		else
 		{
+			//GameObject.SetPrefabSource
 			GameObject.NetworkMode = NetworkMode.Never;
 		}
 	}
