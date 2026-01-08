@@ -2,11 +2,8 @@
 
 namespace Sandbox;
 
-public class EntityComponent : IComponent
+public class EntityComponent : Component, IComponent
 {
-	/// <inheritdoc cref="IComponent.Enabled"/>
-	public bool Enabled { get; set; }
-
 	/// <inheritdoc cref="IComponent.IsClientOnly"/>
 	public bool IsClientOnly => throw new NotImplementedException();
 
@@ -19,7 +16,7 @@ public class EntityComponent : IComponent
 	/// <summary>
 	/// The entity this component is attached to.
 	/// </summary>
-	public Entity Entity { get; internal set; }
+	public Entity Entity => GameObject;
 
 	/// <summary>
 	/// Called when this component is enabled (or added to the entity).
@@ -40,10 +37,17 @@ public class EntityComponent : IComponent
 	/// Remove this component from the parent entity. Entity will become null immediately,
 	/// so don't try to access it after calling this!
 	/// </summary>
-	public void Remove() => Entity?.Components.Remove( this );
+	public void Remove() => Destroy();
 
 	/// <inheritdoc cref="object.ToString"/>
 	public override string ToString() => Name ?? $"{DisplayInfo.For( this ).Name} {GetHashCode()}";
+
+	#region Forwarded actions
+
+	protected override void OnEnabled() => OnActivate();
+	protected override void OnDisabled() => OnDeactivate();
+
+	#endregion
 }
 
 /// <summary>
