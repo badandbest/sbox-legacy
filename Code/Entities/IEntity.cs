@@ -95,7 +95,7 @@ public interface IEntity : IValid
 	/// <summary>
 	/// Access to get, add and remove components.
 	/// </summary>
-	IComponentSystem Components { get; }
+	ComponentList Components { get; }
 
 	/// <summary>
 	/// Delete this entity.

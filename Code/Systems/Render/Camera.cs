@@ -43,6 +43,8 @@ public static class Camera
 	{
 		get; set
 		{
+			field = value;
+			return;
 			if ( field == value )
 			{
 				return;

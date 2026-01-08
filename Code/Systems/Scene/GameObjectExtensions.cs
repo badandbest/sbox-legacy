@@ -39,6 +39,11 @@ public static class GameObjectExtensions
 			// 6. Re-enable object.
 			go.Enabled = isEnabled;
 		}
+
+		/// <summary>
+		/// Returns the current game object that is being deserialized.
+		/// </summary>
+		public static GameObject Deserializing => Game.ActiveScene.GetAllObjects( false ).LastOrDefault( x => x.IsDeserializing );
 	}
 
 	private sealed class Placeholder : Component

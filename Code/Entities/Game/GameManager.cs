@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sandbox;
+﻿namespace Sandbox;
 
 /// <summary>
 /// This is the main base game.
@@ -11,7 +9,7 @@ public abstract partial class GameManager : Entity
 	/// <summary>
 	/// Currently active game entity.
 	/// </summary>
-	public static GameManager Current => All.OfType<GameManager>().Single();
+	public static GameManager Current => Game.ActiveScene.Get<GameManager>();
 
 	/// <summary>
 	/// Client has joined the server. Create their puppets.
@@ -69,4 +67,12 @@ public abstract partial class GameManager : Entity
 	{
 		Game.LocalPawn?.BuildInput();
 	}
+
+	#region Forwarded actions
+
+	protected override void OnFixedUpdate() => Simulate( Game.LocalClient );
+	protected override void OnUpdate() => FrameSimulate( Game.LocalClient );
+	protected override void OnPreRender() => BuildInput();
+
+	#endregion
 }

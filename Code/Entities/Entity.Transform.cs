@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Sandbox;
 
@@ -15,15 +16,15 @@ public partial class Entity
 	[Hide]
 	public virtual Entity Parent
 	{
-		get => GameObject.Parent;
-		set => GameObject.Parent = value;
+		get => Components.Get<Entity>( FindMode.InAncestors );
+		set => SetParent( value );
 	}
 
 	/// <summary>
 	/// Gets the top most parent entity. If we don't have a parent, it might be us.
 	/// </summary>
 	[Hide]
-	public virtual Entity Root => Parent?.Root ?? this;
+	public virtual Entity Root => Components.GetAll<Entity>( FindMode.EverythingInSelfAndAncestors ).Last();
 
 	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
 	[Hide]
@@ -33,7 +34,7 @@ public partial class Entity
 	/// All entities that are parented to this entity.
 	/// </summary>
 	[Hide]
-	public List<Entity> Children => [.. GameObject.Children];
+	public List<Entity> Children => [.. Components.GetAll<Entity>( FindMode.EverythingInChildren )];
 
 	/// <summary>
 	/// Become a child of this entity.
@@ -68,65 +69,41 @@ public partial class Entity
 	#region World Transform
 
 	[Hide]
-	public virtual Transform Transform
+	public new Transform Transform
 	{
-		get => GameObject.WorldTransform;
-		set => GameObject.WorldTransform = value;
+		get => WorldTransform;
+		set => WorldTransform = value;
 	}
 
 	[Hide]
-	public virtual Vector3 Position
+	public Vector3 Position
 	{
-		get => GameObject.WorldPosition;
-		set => GameObject.WorldPosition = value;
+		get => WorldPosition;
+		set => WorldPosition = value;
 	}
 
 	[Hide]
-	public virtual Rotation Rotation
+	public Rotation Rotation
 	{
-		get => GameObject.WorldRotation;
-		set => GameObject.WorldRotation = value;
+		get => WorldRotation;
+		set => WorldRotation = value;
 	}
 
 	/// <summary>
 	/// The scale of the entity. 1 is normal.
 	/// </summary>
 	[Hide]
-	public virtual float Scale
+	public float Scale
 	{
-		get => GameObject.WorldScale.x;
-		set => GameObject.WorldScale = value;
-	}
-
-	#endregion
-
-	#region Local Transform
-
-	/// <summary>
-	/// The entity's position relative to its parent (or the world if no parent)
-	/// </summary>
-	[Hide]
-	public virtual Vector3 LocalPosition
-	{
-		get => GameObject.LocalPosition;
-		set => GameObject.LocalPosition = value;
-	}
-
-	/// <summary>
-	/// The entity's local rotation.
-	/// </summary>
-	[Hide]
-	public virtual Rotation LocalRotation
-	{
-		get => GameObject.LocalRotation;
-		set => GameObject.LocalRotation = value;
+		get => WorldScale.x;
+		set => WorldScale = value;
 	}
 
 	/// <summary>
 	/// The entity's scale relative to its parent's scale. 1 is normal.
 	/// </summary>
 	[Hide]
-	public virtual float LocalScale
+	public new float LocalScale
 	{
 		get => GameObject.LocalScale.x;
 		set => GameObject.LocalScale = value;

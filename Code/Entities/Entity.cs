@@ -1,11 +1,43 @@
-﻿namespace Sandbox;
+﻿using System.Collections.Generic;
+
+namespace Sandbox;
 
 /// <summary>
 /// A base entity all other entities derive from.
 /// </summary>
 [Library( "entity" )]
-public partial class Entity : IEntity
+[Icon( "people" ), Tint( EditorTint.White )]
+public partial class Entity : Component, IEntity
 {
+	/// <summary>
+	/// A list of all active entities.
+	/// </summary>
+	public static IEnumerable<Entity> All => Game.ActiveScene.GetAll<Entity>();
+
+	/// <summary>
+	/// Create the entity.
+	/// </summary>
+	public Entity()
+	{
+		//
+		// For entities, GameObjects need to be set immediately.
+		//
+
+		if ( GameObject.Deserializing is GameObject parent )
+		{
+			TypeLibrary.SetProperty( this, nameof( GameObject ), parent );
+			return;
+		}
+
+		var go = new GameObject( GetType().Name );
+		go.AddComponent( this );
+	}
+
+	/// <summary>
+	/// Delete this entity. You shouldn't access it anymore.
+	/// </summary>
+	public void Delete() => DestroyGameObject();
+
 	/// <summary>
 	/// Called when the entity is spawned in. It should have all properties set by this point.
 	/// This is the place to set up your entity.
@@ -28,14 +60,22 @@ public partial class Entity : IEntity
 	public virtual void BuildInput() { }
 
 	/// <summary>
-	/// Called when the entity was destroyed. This is not the same as the class destructor.
+	/// A component has been added to the entity.
 	/// </summary>
-	protected internal virtual void OnDestroy() { }
+	protected internal virtual void OnComponentAdded( EntityComponent component ) { }
 
-	#region Unimplemented
+	/// <summary>
+	/// A component has been removed from the entity.
+	/// </summary>
+	protected internal virtual void OnComponentRemoved( EntityComponent component ) { }
 
-	public BBox WorldSpaceBounds { get; }
-	public Vector3 Velocity { get; set; }
+	public static implicit operator GameObject( Entity entity ) => entity.GameObject;
+
+	public static implicit operator Entity( GameObject gameObject ) => gameObject?.GetComponent<Entity>();
+
+	#region Forwarded actions
+
+	protected override void OnStart() => Spawn();
 
 	#endregion
 }

@@ -3,7 +3,7 @@
   "GameObjects": [
     {
       "__guid": "d7c8ced9-c8b4-40f2-9afe-272ed328a12b",
-      "__version": 1,
+      "__version": 2,
       "Flags": 0,
       "Name": "Main Camera",
       "Position": "0,0,0",
@@ -12,7 +12,7 @@
       "Tags": "maincamera",
       "Enabled": true,
       "NetworkMode": 2,
-      "NetworkInterpolation": true,
+      "NetworkFlags": 0,
       "NetworkOrphaned": 0,
       "NetworkTransmit": true,
       "OwnerTransfer": 1,
@@ -21,6 +21,7 @@
           "__type": "Sandbox.CameraComponent",
           "__guid": "b19a8b50-eaa1-4e1d-ae10-1bd6b49ebb4f",
           "__enabled": true,
+          "Flags": 0,
           "BackgroundColor": "0.33333,0.46275,0.52157,1",
           "ClearFlags": "All",
           "EnablePostProcessing": true,
@@ -44,6 +45,44 @@
           "Viewport": "0,0,1,1",
           "ZFar": 10000,
           "ZNear": 10
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "e98bcfc3-cc14-4dd7-a7df-fbe5ed401e04",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "Setup",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.Setup",
+          "__guid": "9c5daf05-71b8-443a-a8a2-4fdc7b26817d",
+          "__enabled": true,
+          "Flags": 0,
+          "__version": 1,
+          "EnableCollision": true,
+          "MapName": "facepunch.flatgrass",
+          "NoOrigin": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnMapLoaded": null,
+          "OnMapUnloaded": null,
+          "UseMapFromLaunch": true
         }
       ],
       "Children": []

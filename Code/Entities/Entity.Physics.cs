@@ -5,15 +5,6 @@ public partial class Entity
 	string IEntity.TagList
 	{
 		get => string.Join( " ", Tags );
-		set => Tags.SetFrom( value );
-	}
-
-	/// <summary>
-	/// Accessor to add, remove and check entity tags
-	/// </summary>
-	public GameTags Tags
-	{
-		get => GameObject.Tags;
 		set => GameObject.Tags.SetFrom( value );
 	}
 
@@ -22,4 +13,11 @@ public partial class Entity
 	/// </summary>
 	[Hide]
 	public Entity GroundEntity { get; set; }
+
+	#region Unimplemented
+
+	public BBox WorldSpaceBounds { get; }
+	public Vector3 Velocity { get; set; }
+
+	#endregion
 }

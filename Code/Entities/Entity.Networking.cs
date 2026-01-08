@@ -6,7 +6,7 @@ namespace Sandbox;
 public partial class Entity
 {
 	int IEntity.Id => NetworkIdent;
-	bool IEntity.IsOwnedByLocalClient => Client == Game.LocalClient;
+	bool IEntity.IsOwnedByLocalClient => !IsProxy;
 
 	/// <summary>
 	/// The client that owns this entity. Usually as a result of being the client's Pawn.
