@@ -5,10 +5,9 @@ namespace Sandbox;
 
 public partial class Entity
 {
-	[Hide]
 	IEntity IEntity.Parent => Parent;
-	[Hide]
 	IEntity IEntity.Owner => Owner;
+	string IEntity.TagList { get => string.Join( " ", Tags ); set => GameObject.Tags.SetFrom( value ); }
 
 	/// <summary>
 	/// What this entity is parented to, if anything. Will make this entity move with it's parent, but loses collisions.
@@ -26,7 +25,7 @@ public partial class Entity
 	[Hide]
 	public virtual Entity Root => Components.GetAll<Entity>( FindMode.EverythingInSelfAndAncestors ).Last();
 
-	/// <inheritdoc cref="P:Legacy.IEntity.Owner" />
+	/// <inheritdoc cref="IEntity.Owner" />
 	[Hide]
 	public virtual Entity Owner { get; set; }
 
@@ -116,5 +115,6 @@ public partial class Entity
 	/// position and rotation, for example in a first-person shooter the player's body is usually
 	/// aiming in a different direction to the player's eyes.
 	/// </summary>
+	[Hide]
 	public virtual Ray AimRay => Transform.ForwardRay;
 }

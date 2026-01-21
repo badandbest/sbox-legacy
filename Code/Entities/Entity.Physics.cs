@@ -2,12 +2,6 @@
 
 public partial class Entity
 {
-	string IEntity.TagList
-	{
-		get => string.Join( " ", Tags );
-		set => GameObject.Tags.SetFrom( value );
-	}
-
 	/// <summary>
 	/// What this entity is "standing" on.
 	/// </summary>
@@ -16,7 +10,9 @@ public partial class Entity
 
 	#region Unimplemented
 
+	[Hide]
 	public BBox WorldSpaceBounds { get; }
+	[Hide]
 	public Vector3 Velocity { get; set; }
 
 	#endregion

@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using Sandbox.Utility;
+using System;
 
 namespace Sandbox;
 
@@ -25,10 +25,11 @@ public partial class Entity
 	/// The client that owns this entity. Usually as a result of being the client's Pawn.
 	/// Also could be because the client's pawn owns this entity,
 	/// </summary>
-	[Browsable( false )]
+	[Hide]
 	public IClient Client => this as ClientEntity ?? Owner?.Client ?? Parent?.Client;
 
-	[Property, Hide, Category( "Meta" )] public int NetworkIdent => GameObject.Id.GetHashCode();
+	[Hide, Category( "Meta" )]
+	public int NetworkIdent => GameObject.Id.GetHashCode();
 
 	/// <summary>
 	/// Returns true if we have authority over this entity. This means we're either serverside,
@@ -37,10 +38,13 @@ public partial class Entity
 	[Hide]
 	public bool IsAuthority => Game.IsServer || IsClientOnly;
 
-	[Hide] public bool IsClientOnly => true;
+	[Hide]
+	public bool IsClientOnly => true;
 
-	[Hide] public bool IsDormant => throw new NotImplementedException();
+	[Hide]
+	public bool IsDormant => throw new NotImplementedException();
 
+	[Hide]
 	public bool IsFromMap => GameObject.Tags.Has( "world" );
 
 	/// <summary>
@@ -48,8 +52,5 @@ public partial class Entity
 	/// were when the client sent the command that is being simulated. When used in a `using` block,
 	/// lag compensation will be automatically finished when it is disposed.
 	/// </summary>
-	public static IDisposable LagCompensation()
-	{
-		return null;
-	}
+	public static IDisposable LagCompensation() => new DisposeAction();
 }

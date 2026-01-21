@@ -2,6 +2,7 @@
 
 namespace Sandbox;
 
+[Icon( "extension" ), Tint( EditorTint.White )]
 public class EntityComponent : Component, IComponent
 {
 	/// <inheritdoc cref="IComponent.IsClientOnly"/>
