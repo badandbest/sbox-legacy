@@ -9,6 +9,19 @@ public partial class Entity
 	bool IEntity.IsOwnedByLocalClient => !IsProxy;
 
 	/// <summary>
+	/// Defaults to <see langword="true" />, this allows you to turn off prediction for this entity. If you set this
+	/// to <see langword="false" /> then the entity won't be predicted even if it's eligible (has local client owner).
+	/// </summary>
+	[Category( "Networking" )]
+	public bool Predictable { get; set; } = true;
+
+	/// <summary>
+	/// When should this entity and its properties be networked to all clients?
+	/// </summary>
+	[Category( "Networking" )]
+	public TransmitType Transmit { get; set; } = TransmitType.Default;
+
+	/// <summary>
 	/// The client that owns this entity. Usually as a result of being the client's Pawn.
 	/// Also could be because the client's pawn owns this entity,
 	/// </summary>
