@@ -4,13 +4,11 @@ namespace Sandbox;
 
 public class ModelEntity : Entity
 {
-	internal virtual ModelRenderer Renderer => GameObject.GetOrAddComponent<ModelRenderer>();
-
 	/// <summary>
-	/// The <see cref="P:Sandbox.ModelEntity.SceneObject" /> that represents this entity.
+	/// The <see cref="Sandbox.SceneObject" /> that represents this entity.
 	/// </summary>
 	[Hide]
-	public virtual SceneObject SceneObject => Renderer.SceneObject;
+	public virtual SceneObject SceneObject { get; } = new SceneObject( Game.ActiveScene.SceneWorld, Model.Cube, Transform.Zero );
 
 	public ModelEntity()
 	{
@@ -30,13 +28,13 @@ public class ModelEntity : Entity
 	/// <summary>
 	/// Access to this entity's model.
 	/// </summary>
-	// [Prefab]
+	[Property]
 	public Model Model
 	{
-		get => Renderer.Model;
+		get => SceneObject.Model;
 		set
 		{
-			Renderer.Model = value;
+			SceneObject.Model = value;
 			OnNewModel( value );
 		}
 	}
@@ -56,8 +54,6 @@ public class ModelEntity : Entity
 	/// </summary>
 	public void SetModel( string name )
 	{
-		// AssertNotPreSpawn( "SetModel" );
-
 		Model = Model.Load( name );
 	}
 
@@ -65,4 +61,19 @@ public class ModelEntity : Entity
 	/// Called when the model of this entity has changed.
 	/// </summary>
 	public virtual void OnNewModel( Model model ) { }
+
+	protected override void OnPreRender()
+	{
+		SceneObject.Transform = Transform;
+	}
+
+	public override void SetParent( Entity entity, bool boneMerge )
+	{
+		base.SetParent( entity, boneMerge );
+
+		if ( entity is ModelEntity { SceneObject: var so } )
+		{
+			so.AddChild( string.Empty, SceneObject );
+		}
+	}
 }

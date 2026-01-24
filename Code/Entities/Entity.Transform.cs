@@ -38,32 +38,14 @@ public partial class Entity
 	/// <summary>
 	/// Become a child of this entity.
 	/// </summary>
-	public virtual void SetParent( Entity entity ) => GameObject.SetParent( entity );
+	public void SetParent( Entity entity ) => SetParent( entity, false );
 
 	/// <summary>
 	/// Set the parent to the passed entity
 	/// </summary>
 	/// <param name="entity"></param>
 	/// <param name="boneMerge"></param>
-	public void SetParent( Entity entity, bool boneMerge )
-	{
-		SetParent( entity );
-
-		if ( boneMerge )
-		{
-			if ( this is not AnimatedEntity { Renderer: var self } )
-			{
-				return;
-			}
-
-			if ( entity is not AnimatedEntity { Renderer: var target } )
-			{
-				return;
-			}
-
-			self.BoneMergeTarget = target;
-		}
-	}
+	public virtual void SetParent( Entity entity, bool boneMerge ) => GameObject.SetParent( entity );
 
 	#region World Transform
 

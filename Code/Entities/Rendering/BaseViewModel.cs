@@ -20,11 +20,6 @@ public class BaseViewModel : AnimatedEntity
 		AllViewModels.Add( this );
 	}
 
-	public override void Spawn()
-	{
-		Renderer.RenderType = ModelRenderer.ShadowRenderType.Off;
-	}
-
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();

@@ -9,6 +9,6 @@ public static class ClothingContainerExtensions
 	{
 		public void LoadFromClient( IClient cl ) => source.Deserialize( Connection.Local.GetUserData( "avatar" ) );
 
-		public void DressEntity( AnimatedEntity entity ) => source.Apply( entity.Renderer );
+		//public void DressEntity( AnimatedEntity entity ) => source.Apply( entity.Renderer );
 	}
 }
