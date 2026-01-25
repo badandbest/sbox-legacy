@@ -5,6 +5,21 @@ public class AnimatedEntity : ModelEntity
 	[Hide]
 	public override SceneModel SceneObject { get; } = new SceneModel( Game.ActiveScene.SceneWorld, Model.Error, Transform.Zero );
 
+	public AnimatedEntity()
+	{
+	}
+
+	public AnimatedEntity( string modelName )
+	{
+		SetModel( modelName );
+	}
+
+	public AnimatedEntity( string modelName, Entity parent )
+	{
+		SetModel( modelName );
+		SetParent( parent, boneMerge: true );
+	}
+
 	/// <summary>
 	/// Retrieve parameter value of currently active Animation Graph.
 	/// </summary>
