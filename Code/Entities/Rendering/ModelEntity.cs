@@ -65,6 +65,22 @@ public class ModelEntity : Entity
 	protected override void OnPreRender()
 	{
 		SceneObject.Transform = Transform;
+		SceneObject.Model = Model;
+
+		var firstPerson = IsFirstPersonMode;
+		var isOverlay = EnableViewmodelRendering;
+
+		var opaque = firstPerson ? !EnableHideInFirstPerson : EnableDrawing;
+		var shadow = firstPerson ? EnableShadowInFirstPerson : EnableShadowCasting;
+
+		if ( isOverlay )
+		{
+			opaque = opaque && Camera.FirstPersonViewer != null;
+		}
+
+		SceneObject.Flags.IsOpaque = opaque;
+		SceneObject.Flags.CastShadows = shadow;
+		SceneObject.Flags.OverlayLayer = isOverlay;
 	}
 
 	public override void SetParent( Entity entity, bool boneMerge )

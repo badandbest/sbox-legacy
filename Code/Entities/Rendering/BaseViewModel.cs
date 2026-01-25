@@ -41,4 +41,11 @@ public class BaseViewModel : AnimatedEntity
 	{
 		return Owner?.PlaySound( soundName, attachment ) ?? base.PlaySound( soundName, attachment );
 	}
+
+	protected override void OnPreRender()
+	{
+		PlaceViewmodel();
+
+		base.OnPreRender();
+	}
 }
