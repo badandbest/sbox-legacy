@@ -28,8 +28,8 @@ public partial class Entity
 	[Hide]
 	public IClient Client => this as ClientEntity ?? Owner?.Client ?? Parent?.Client;
 
-	[Hide, Category( "Meta" )]
-	public int NetworkIdent => GameObject.Id.GetHashCode();
+	[Property, Hide, Category( "Meta" )]
+	public override int NetworkIdent => GameObject.Id.GetHashCode();
 
 	/// <summary>
 	/// Returns true if we have authority over this entity. This means we're either serverside,

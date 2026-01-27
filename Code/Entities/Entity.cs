@@ -7,7 +7,7 @@ namespace Sandbox;
 /// </summary>
 [Library( "entity" )]
 [Icon( "people" ), Tint( EditorTint.White )]
-public partial class Entity : Component, IEntity
+public partial class Entity : BaseNetworkable, IEntity
 {
 	/// <summary>
 	/// A list of all active entities.
