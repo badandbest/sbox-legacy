@@ -2,7 +2,7 @@
 
 namespace Sandbox;
 
-public class ModelEntity : Entity
+public partial class ModelEntity : Entity
 {
 	/// <summary>
 	/// The <see cref="Sandbox.SceneObject" /> that represents this entity.
@@ -50,7 +50,7 @@ public class ModelEntity : Entity
 	}
 
 	/// <summary>
-	/// Set the <see cref="P:Sandbox.ModelEntity.Model" /> of this entity by name/path.
+	/// Set the <see cref="Model" /> of this entity by name/path.
 	/// </summary>
 	public void SetModel( string name )
 	{
@@ -83,9 +83,9 @@ public class ModelEntity : Entity
 		SceneObject.Flags.OverlayLayer = isOverlay;
 	}
 
-	public override void SetParent( Entity entity, bool boneMerge )
+	public override void SetParent( Entity entity, string attachmentOrBoneName = null, Transform? transform = null )
 	{
-		base.SetParent( entity, boneMerge );
+		base.SetParent( entity, attachmentOrBoneName, transform );
 
 		if ( entity is ModelEntity { SceneObject: var so } )
 		{

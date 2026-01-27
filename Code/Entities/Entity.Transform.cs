@@ -36,16 +36,19 @@ public partial class Entity
 	public List<Entity> Children => [.. Components.GetAll<Entity>( FindMode.EverythingInChildren )];
 
 	/// <summary>
-	/// Become a child of this entity.
+	/// Become a child of this entity and follow this attachment or bone if provided.
 	/// </summary>
-	public void SetParent( Entity entity ) => SetParent( entity, false );
+	public virtual void SetParent( Entity entity, string attachmentOrBoneName = null, Transform? transform = null ) => GameObject.SetParent( entity );
 
 	/// <summary>
 	/// Set the parent to the passed entity
 	/// </summary>
 	/// <param name="entity"></param>
 	/// <param name="boneMerge"></param>
-	public virtual void SetParent( Entity entity, bool boneMerge ) => GameObject.SetParent( entity );
+	public void SetParent( Entity entity, bool boneMerge )
+	{
+		SetParent( entity, boneMerge ? "!bonemerge" : null, Transform.Zero );
+	}
 
 	#region World Transform
 
