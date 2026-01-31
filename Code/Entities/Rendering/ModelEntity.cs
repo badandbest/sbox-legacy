@@ -40,16 +40,6 @@ public partial class ModelEntity : Entity
 	}
 
 	/// <summary>
-	/// The collision bounds.
-	/// </summary>
-	[Hide]
-	public BBox CollisionBounds
-	{
-		get => Model.Bounds;
-		set => throw new NotImplementedException();
-	}
-
-	/// <summary>
 	/// Set the <see cref="Model" /> of this entity by name/path.
 	/// </summary>
 	public void SetModel( string name )
